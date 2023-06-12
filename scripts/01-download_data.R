@@ -13,9 +13,14 @@ library(tidyverse)
 library(haven)
 
 #### Download data ####
-# [...ADD CODE HERE TO DOWNLOAD...]
+# Download & unzip GSS data from all years
+zip_file <- "inputs/data/large_files/GSS_stata.zip"
 
+download.file("https://gss.norc.org/documents/stata/GSS_stata.zip", zip_file)
+unzip(zip_file, exdir = "inputs/data/large_files")
 
+# read dta data and write to csv
+raw_gss_data <- read_dta("inputs/data/large_files/gss7222_r1.dta")
 
 #### Save data ####
 # [...UPDATE THIS...]
