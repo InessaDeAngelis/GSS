@@ -11,6 +11,7 @@
 #### Workspace setup ####
 library(tidyverse)
 library(haven)
+library(here)
 
 #### Download data ####
 # Download & unzip GSS data from all years
@@ -20,7 +21,7 @@ download.file("https://gss.norc.org/documents/stata/GSS_stata.zip", zip_file)
 unzip(zip_file, exdir = "inputs/data/large_files")
 
 # read dta data and write to csv
-raw_gss_data <- read_dta("inputs/data/large_files/gss7222_r1.dta")
+raw_gss_data <- read_dta(here::here("inputs/data/large_files/GSS_stata/gss7222_r1.dta"))
 
 # filter survey data and select relevant data
 raw_respondent_info <-
@@ -28,5 +29,15 @@ raw_respondent_info <-
   select(
     year,
     id,
+    age,
+    sex,
+    educ,
+    income,
+    marital
   )
  
+# save raw respondent info data #
+write_csv(
+  x = raw_respondent_info,
+  file = "inputs/data/raw_respondent_info.csv"
+)
