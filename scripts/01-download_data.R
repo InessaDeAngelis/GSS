@@ -41,3 +41,20 @@ write_csv(
   x = raw_respondent_info,
   file = "inputs/data/raw_respondent_info.csv"
 )
+
+# select women in politics data
+raw_women_in_politics <-
+raw_gss_data |> 
+  select(
+    year,
+    id,
+    fepol,
+    fepolv,
+    fepolnv
+  )
+
+# save raw women in politics data #
+write_csv(
+  x = raw_women_in_politics,
+  file = "inputs/data/raw_women_in_politics.csv"
+)
