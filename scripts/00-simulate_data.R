@@ -52,3 +52,15 @@ simulated_data <-tibble(
   party_affiliation = sample(c("0", "1", "2", "3", "4", "5", "6", "7"), size = num_people, replace = TRUE),
 )
 simulated_data
+
+#### Simulate more liberal political views / disagree that men are emotionally better suited for politics ####
+set.seed(416)
+num_people <- 5000
+
+simulated_data <-tibble(
+  person = 1:num_people,
+  # use 1 through 3 to represent liberal views (extremely liberal, liberal, slightly liberal)
+  party_affiliation = sample(c("1", "2", "3"), size = num_people, replace = TRUE),
+  men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
+)
+simulated_data
