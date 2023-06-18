@@ -16,6 +16,7 @@ library(janitor)
 # Political views vary on a scale from 1-7 from extremely liberal, to moderate, to extremely conservative 
 # Party affiliation varies on a scale from 0-7 from strong Democrat, to independent/neutral, to strong Republican
 # People with more liberal political views will disagree that men are emotionally better suited for politics than women
+# People with more conservative views will agree that men are emotionally better suited for politics than women
 
 #### Simulate responses to men being better suited emotionally for politics than women ####
 #Code referenced from: https://tellingstorieswithdata.com/08-hunt.html
@@ -61,6 +62,18 @@ simulated_data <-tibble(
   person = 1:num_people,
   # use 1 through 3 to represent liberal views (extremely liberal, liberal, slightly liberal)
   party_affiliation = sample(c("1", "2", "3"), size = num_people, replace = TRUE),
+  men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
+)
+simulated_data
+
+#### Simulate more conservative views / agree that men are emotionally better suited for politics ####
+set.seed(416)
+num_people <- 5000
+
+simulated_data <-tibble(
+  person = 1:num_people,
+  # use 5 through 7 to represent liberal views (slightly conservative, conservative, extremely conservative)
+  party_affiliation = sample(c("5", "6", "7"), size = num_people, replace = TRUE),
   men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
 )
 simulated_data
