@@ -61,7 +61,7 @@ num_people <- 5000
 simulated_data <-tibble(
   person = 1:num_people,
   # use 1 through 3 to represent liberal views (extremely liberal, liberal, slightly liberal)
-  party_affiliation = sample(c("1", "2", "3"), size = num_people, replace = TRUE),
+  political_views = sample(c("1", "2", "3"), size = num_people, replace = TRUE),
   men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
 )
 simulated_data
@@ -73,7 +73,7 @@ num_people <- 5000
 simulated_data <-tibble(
   person = 1:num_people,
   # use 5 through 7 to represent liberal views (slightly conservative, conservative, extremely conservative)
-  party_affiliation = sample(c("5", "6", "7"), size = num_people, replace = TRUE),
+  political_views = sample(c("5", "6", "7"), size = num_people, replace = TRUE),
   men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
 )
 simulated_data
