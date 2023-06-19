@@ -23,5 +23,25 @@ readr::read_csv("inputs/data/raw_women_in_politics.csv")
 readr::read_csv("inputs/data/raw_political_preferences.csv")
 
 #### Clean respondent information data ####
+raw_respondent_info <-
+  read_csv(
+    file = "inputs/data/raw_respondent_info.csv",
+    show_col_types = FALSE
+  )
 
+# Name organization #
+cleaned_respondent_info <-
+  clean_names(raw_respondent_info)
 
+head(cleaned_respondent_info)
+
+# Select columns of interest # 
+cleaned_respondent_info <-
+  cleaned_respondent_info |>
+  select(
+    year,
+    id,
+    age,
+    sex
+  )
+  head(cleaned_respondent_info)
