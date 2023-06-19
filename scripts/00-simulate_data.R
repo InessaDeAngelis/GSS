@@ -79,6 +79,11 @@ simulated_data <-tibble(
 simulated_data
 
 #### Data Validation ####
+# Check that people can either agree or disagree with the statement that men are better suited for politics
+population |>
+group_by(men_better_suited) |>
+ summarise()
+
 # Check that political views range from 1 through 7
 simulated_data$political_views |> min() == 1
 simulated_data$political_views |> max() == 7
