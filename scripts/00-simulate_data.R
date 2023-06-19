@@ -47,12 +47,12 @@ set.seed(416)
 
 num_people <- 5000
 
-simulated_data <-tibble(
+simulate_data <-tibble(
   person = 1:num_people,
   #use 0 through 7 to represent political views 
   party_affiliation = sample(c("0", "1", "2", "3", "4", "5", "6", "7"), size = num_people, replace = TRUE),
 )
-simulated_data
+simulate_data
 
 #### Simulate more liberal political views / disagree that men are emotionally better suited for politics ####
 set.seed(416)
@@ -77,3 +77,12 @@ simulated_data <-tibble(
   men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
 )
 simulated_data
+
+#### Data Validation ####
+# Check that political views range from 1 through 7
+simulated_data$political_views |> min() == 1
+simulated_data$political_views |> max() == 7
+
+# Check that party affiliation ranges from 0 through 7
+simulate_data$party_affiliation |> min() == 0
+simulate_data$party_affiliation |> max() == 7
