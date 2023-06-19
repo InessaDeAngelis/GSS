@@ -12,7 +12,8 @@ library(janitor)
 
 #### Data expectations ####
 # Agreement varies with the statement that men are better suited emotionally for politics than women
-# More people agree with the statement that men are better suited emotionally for politics than women in previous decades
+# Agreement varies by gender with the statement that men are better suited emotionally for politics than women
+# Agreement varies over time with the statement that men are better suited emotionally for politics than women
 # Political views vary on a scale from 1-7 from extremely liberal, to moderate, to extremely conservative 
 # Party affiliation varies on a scale from 0-7 from strong Democrat, to independent/neutral, to strong Republican
 # People with more liberal political views will disagree that men are emotionally better suited for politics than women
@@ -41,6 +42,18 @@ responses <- tibble(
   gender = sample(c("Male", "Female"), size = num_people, replace = TRUE), 
 )
 responses
+
+#### Simulate responses over time to men being better suited emotionally for politics than women ####
+set.seed(416)
+
+num_people <- 5000
+
+over_time <- tibble(
+  person = 1:num_people,
+  men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE), 
+  "time" = x <- sample(1972:2022, 5000, replace=T),
+)
+over_time
 
 #### Simulate varying political views ####
 set.seed(416)
