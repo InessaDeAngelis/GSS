@@ -30,6 +30,18 @@ population <- tibble(
 )
 population
 
+#### Simulate responses by gender to men being better suited emotionally for politics than women ####
+set.seed(416)
+
+num_people <- 5000
+
+responses <- tibble(
+  person = 1:num_people,
+  men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE), 
+  gender = sample(c("Male", "Female"), size = num_people, replace = TRUE), 
+)
+responses
+
 #### Simulate varying political views ####
 set.seed(416)
 
@@ -82,7 +94,7 @@ simulated_data
 # Check that people can either agree or disagree with the statement that men are better suited for politics
 population |>
 group_by(men_better_suited) |>
- summarise()
+  summarise()
 
 # Check that political views range from 1 through 7
 simulated_data$political_views |> min() == 1
