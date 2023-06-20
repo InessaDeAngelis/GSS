@@ -87,14 +87,30 @@ cleaned_fepolv =
       women_in_politics = fepolnv,
     )
 
+# save fepol, fepolv, and fepolnv data #
+  write_csv(
+    x = cleaned_fepol,
+    file = "cleaned_fepol.csv"
+  )
+
+  write_csv(
+    x = cleaned_fepolv,
+    file = "cleaned_fepolv.csv"
+  )
+
+  write_csv(
+    x = cleaned_fepolnv,
+    file = "cleaned_fepolnv.csv"
+  )
+  
 # Combine fepol, fepolv, and fepolnv columns #  
   cleaned_women_in_politics =
-    merge(
+  merge(
       cleaned_fepol,
       cleaned_fepolv,
       cleaned_fepolnv,
       by = "women_in_politics"
-    )
+  )
   cleaned_women_in_politics
 
  
