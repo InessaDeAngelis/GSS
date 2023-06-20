@@ -45,3 +45,32 @@ cleaned_respondent_info <-
     sex
   )
   head(cleaned_respondent_info)
+
+#### Clean women in politics data ####
+cleaned_women_in_politics <-
+  read_csv(
+      file = "inputs/data/raw_women_in_politics.csv",
+      show_col_types = FALSE
+    )
+  
+# Name organization #
+  cleaned_women_in_politics <-
+  clean_names(raw_women_in_politics)
+  cleaned_women_in_politics
+
+# Remove lines with NA #
+  cleaned_women_in_politics |>
+    drop_na("fepol") 
+  
+  cleaned_women_in_politics |>
+    drop_na("fepolv") 
+  
+  cleaned_women_in_politics |>
+    drop_na("fepolnv") 
+  
+# Combine fepol, fepolv, and fepolnv columns #
+  cleaned_women_in_politics |>
+   inner_join(cleaned_women_in_politics, 
+     by=c("fepol", "fepolv", "fepolnv")
+   )
+  (head(cleaned_women_in_politics))
