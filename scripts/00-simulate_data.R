@@ -51,7 +51,7 @@ num_people <- 5000
 over_time <- tibble(
   person = 1:num_people,
   men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE), 
-  "time" = x <- sample(1972:2022, 5000, replace=T),
+  "time" = x <- sample(1974:2022, 5000, replace=T),
 )
 over_time
 
