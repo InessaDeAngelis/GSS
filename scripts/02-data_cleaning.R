@@ -65,7 +65,6 @@ raw_women_in_politics <-
 # Name organization #
   cleaned_women_in_politics <-
   clean_names(raw_women_in_politics)
-  cleaned_women_in_politics 
 head(cleaned_women_in_politics)
   
 # Remove lines with NA #
@@ -80,5 +79,36 @@ head(cleaned_women_in_politics)
   
 # Combine fepol, fepolv, and fepolnv columns #
   cleaned_women_in_politics |>
-    unite(Women_in_Politics, c('fepol', 'fepolv', 'fepolnv'), sep='/')
-  
+    inner_join(c('fepol', 'fepolv', 'fepolnv'))
+ 
+ unite(cleaned_women_in_politics, fepol, c(fepol, fepolv, fepolnv))
+ 
+ 
+ #### Clean political preferences data ####
+ raw_political_preferences <-
+   read_csv(
+     file = "inputs/data/raw_political_preferences.csv",
+     show_col_types = FALSE
+   )
+ 
+ # Reunite labels #
+ raw_political_preferences <-
+   to_factor(raw_political_preferences)
+ 
+ # Name organization #
+ cleaned_political_preferences <-
+   clean_names(raw_political_preferences)
+ head(cleaned_political_preferences)
+ 
+ # Remove lines with NA #
+cleaned_political_preferences |>
+   drop_na("polviews") 
+
+ 
+ #### Save cleaned data ####
+ 
+ write_csv(
+   x = cleaned_political_preferences,
+   file = "inputs/data/cleaned_political_preferences.csv"
+ )
+ 
