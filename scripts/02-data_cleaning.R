@@ -52,7 +52,7 @@ cleaned_respondent_info <-
   head(cleaned_respondent_info)
 
 #### Clean women in politics data ####
-cleaned_women_in_politics <-
+raw_women_in_politics <-
   read_csv(
       file = "inputs/data/raw_women_in_politics.csv",
       show_col_types = FALSE
@@ -62,27 +62,41 @@ cleaned_women_in_politics <-
 raw_women_in_politics <-
   to_factor(raw_women_in_politics)
   
-# Name organization #
-  cleaned_women_in_politics <-
-  clean_names(raw_women_in_politics)
-head(cleaned_women_in_politics)
-  
 # Remove lines with NA #
-  cleaned_women_in_politics |>
+cleaned_fepol =
+  raw_women_in_politics |>
     drop_na("fepol") 
-  
-  cleaned_women_in_politics |>
-    drop_na("fepolv") 
-  
-  cleaned_women_in_politics |>
-    drop_na("fepolnv") 
-  
-# Combine fepol, fepolv, and fepolnv columns #
-  cleaned_women_in_politics |>
-    inner_join(c('fepol', 'fepolv', 'fepolnv'))
- 
- unite(cleaned_women_in_politics, fepol, c(fepol, fepolv, fepolnv))
- 
+cleaned_fepol |>
+  rename(
+    women_in_politics = fepol,
+  )
+
+cleaned_fepolv =
+  raw_women_in_politics |>
+  drop_na("fepolv") 
+  cleaned_fepolv|>
+    rename(
+      women_in_politics = fepolv,
+    )
+
+  cleaned_fepolnv =
+    raw_women_in_politics |>
+  drop_na("fepolnv") 
+  cleaned_fepolnv|>
+    rename(
+      women_in_politics = fepolnv,
+    )
+
+# Combine fepol, fepolv, and fepolnv columns #  
+  cleaned_women_in_politics =
+    merge(
+      cleaned_fepol,
+      cleaned_fepolv,
+      cleaned_fepolnv,
+      by = "women_in_politics"
+    )
+  cleaned_women_in_politics
+
  
  #### Clean political preferences data ####
  raw_political_preferences <-
@@ -98,17 +112,18 @@ head(cleaned_women_in_politics)
  # Name organization #
  cleaned_political_preferences <-
    clean_names(raw_political_preferences)
- head(cleaned_political_preferences)
  
  # Remove lines with NA #
-cleaned_political_preferences |>
-   drop_na("polviews") 
+summarized_political_preferences = 
+ cleaned_political_preferences |>
+   drop_na("polviews") |>
+  drop_na("partyid")
+(head(summarized_political_preferences))
 
- 
  #### Save cleaned data ####
- 
  write_csv(
-   x = cleaned_political_preferences,
-   file = "inputs/data/cleaned_political_preferences.csv"
+   x = summarized_political_preferences,
+   file = "inputs/data/summarized_political_preferences.csv"
  )
+
  
