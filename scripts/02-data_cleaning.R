@@ -10,6 +10,7 @@
 library(tidyverse)
 library(janitor)
 library(dplyr)
+library(labelled)
 
 #### Read in raw data sets ####
 
@@ -29,10 +30,14 @@ raw_respondent_info <-
     show_col_types = FALSE
   )
 
+# Reunite labels #
+# Based on code from: https://tellingstorieswithdata.com/08-hunt.html 
+raw_respondent_info <-
+  to_factor(raw_respondent_info)
+
 # Name organization #
 cleaned_respondent_info <-
   clean_names(raw_respondent_info)
-
 head(cleaned_respondent_info)
 
 # Select columns of interest # 
@@ -52,12 +57,17 @@ cleaned_women_in_politics <-
       file = "inputs/data/raw_women_in_politics.csv",
       show_col_types = FALSE
     )
+
+# Reunite labels #
+raw_women_in_politics <-
+  to_factor(raw_women_in_politics)
   
 # Name organization #
   cleaned_women_in_politics <-
   clean_names(raw_women_in_politics)
-  cleaned_women_in_politics
-
+  cleaned_women_in_politics 
+head(cleaned_women_in_politics)
+  
 # Remove lines with NA #
   cleaned_women_in_politics |>
     drop_na("fepol") 
@@ -70,7 +80,5 @@ cleaned_women_in_politics <-
   
 # Combine fepol, fepolv, and fepolnv columns #
   cleaned_women_in_politics |>
-   inner_join(cleaned_women_in_politics, 
-     by=c("fepol", "fepolv", "fepolnv")
-   )
-  (head(cleaned_women_in_politics))
+    unite(Women_in_Politics, c('fepol', 'fepolv', 'fepolnv'), sep='/')
+  
