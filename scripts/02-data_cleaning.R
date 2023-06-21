@@ -180,17 +180,17 @@ summarized_political_preferences
  #### Save cleaned data ####
 write_csv(
   x = cleaned_respondent_info,
-  file = "inputs/data/cleaned_respondent_info.csv"
+  file = "outputs/data/cleaned_respondent_info.csv"
 )
 
 write_csv(
   x = cleaned_women_in_politics,
-  file = "inputs/data/cleaned_women_in_politics.csv"
+  file = "outputs/data/cleaned_women_in_politics.csv"
 )
 
  write_csv(
    x = summarized_political_preferences,
-   file = "inputs/data/summarized_political_preferences.csv"
+   file = "outputs/data/summarized_political_preferences.csv"
  )
 
  
