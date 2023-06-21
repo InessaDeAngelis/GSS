@@ -43,8 +43,9 @@ cleaned_respondent_info =
     id,
     age,
     sex
-  ) 
-cleaned_respondent_info 
+  ) |>
+  filter(year > 1973)
+cleaned_respondent_info
 
 #### Clean women in politics data ####
 raw_women_in_politics <-
