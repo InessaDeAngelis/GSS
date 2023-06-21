@@ -35,21 +35,16 @@ raw_respondent_info <-
 raw_respondent_info <-
   to_factor(raw_respondent_info)
 
-# Name organization #
-cleaned_respondent_info <-
-  clean_names(raw_respondent_info)
-head(cleaned_respondent_info)
-
 # Select columns of interest # 
-cleaned_respondent_info <-
-  cleaned_respondent_info |>
+cleaned_respondent_info = 
+  raw_respondent_info |>
   select(
     year,
     id,
     age,
     sex
-  )
-  head(cleaned_respondent_info)
+  ) 
+cleaned_respondent_info 
 
 #### Clean women in politics data ####
 raw_women_in_politics <-
@@ -61,32 +56,34 @@ raw_women_in_politics <-
 # Reunite labels #
 raw_women_in_politics <-
   to_factor(raw_women_in_politics)
-  
+raw_women_in_politics
+
 # Remove lines with NA #
 cleaned_fepol =
   raw_women_in_politics |>
-    drop_na("fepol") 
-cleaned_fepol |>
+    drop_na("fepol") |>
   rename(
     women_in_politics = fepol,
   )
+cleaned_fepol
 
 cleaned_fepolv =
   raw_women_in_politics |>
-  drop_na("fepolv") 
-  cleaned_fepolv|>
+  drop_na("fepolv") |>
     rename(
       women_in_politics = fepolv,
     )
+cleaned_fepolv
 
   cleaned_fepolnv =
     raw_women_in_politics |>
-  drop_na("fepolnv") 
-  cleaned_fepolnv|>
+  drop_na("fepolnv")|>
     rename(
       women_in_politics = fepolnv,
     )
+  cleaned_fepolnv
 
+  
 # save fepol, fepolv, and fepolnv data #
   write_csv(
     x = cleaned_fepol,
@@ -102,17 +99,16 @@ cleaned_fepolv =
     x = cleaned_fepolnv,
     file = "cleaned_fepolnv.csv"
   )
-  
+
 # Combine fepol, fepolv, and fepolnv columns #  
   cleaned_women_in_politics =
   merge(
-      cleaned_fepol,
+    cleaned_fepol,
       cleaned_fepolv,
       cleaned_fepolnv,
       by = "women_in_politics"
   )
-  cleaned_women_in_politics
-
+cleaned_women_in_politics
  
  #### Clean political preferences data ####
  raw_political_preferences <-
