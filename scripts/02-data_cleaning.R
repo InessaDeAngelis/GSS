@@ -47,6 +47,18 @@ cleaned_respondent_info =
   filter(year > 1973)
 cleaned_respondent_info
 
+# Case Match #
+#Code referenced from: https://tellingstorieswithdata.com/02-drinking_from_a_fire_hose.html 
+cleaned_respondent_info <-
+  cleaned_respondent_info |>
+  mutate("sex" = case_when(
+    sex == 1 ~ "Male",
+    sex == 2 ~ "Female",
+  )) |>
+select(year, id, age, sex)
+cleaned_respondent_info
+  
+
 #### Clean women in politics data ####
 raw_women_in_politics <-
   read_csv(
@@ -107,7 +119,16 @@ cleaned_fepolnv
   # Code referenced from: https://www.statmethods.net/management/merging.html
    cleaned_women_in_politics <- rbind (cleaned_fepol, cleaned_fepolv, cleaned_fepolnv)
    cleaned_women_in_politics
-     
+
+   # Case match #
+   cleaned_women_in_politics <-
+     cleaned_women_in_politics |>
+     mutate("women_in_politics" = case_when(
+       women_in_politics == 1 ~ "Agree",
+       women_in_politics == 2 ~ "Disagree",
+     )) |>
+     select(year, id, women_in_politics)
+   cleaned_women_in_politics
  
  #### Clean political preferences data ####
  raw_political_preferences <-
@@ -131,10 +152,40 @@ summarized_political_preferences =
   drop_na("partyid")
 (head(summarized_political_preferences))
 
+# Case match #
+summarized_political_preferences <-
+  summarized_political_preferences |>
+  mutate("polviews" = case_when(
+    polviews == 1 ~ "Extremely Liberal",
+    polviews == 2 ~ "Liberal",
+    polviews == 3 ~ "Slightly Liberal",
+    polviews == 4 ~ "Moderate",
+    polviews == 5 ~ "Slightly Conservative",
+    polviews == 6 ~ "Conservative",
+    polviews == 7 ~ "Extremely Conservative"
+  )) |>
+  mutate("partyid" = case_when(
+    partyid == 0 ~ "Strong Democrat",
+    partyid == 1 ~ "Not Strong Democrat",
+    partyid == 2 ~ "Independent, Close to Democrat",
+    partyid == 3 ~ "Independent",
+    partyid == 4 ~ "Independent, Close to Republican",
+    partyid == 5 ~ "Not Strong Republican",
+    partyid == 6 ~ "Strong Republican",
+    partyid == 7 ~ "Other"
+  )) |>
+  select(year, id, polviews, partyid)
+summarized_political_preferences
+
  #### Save cleaned data ####
 write_csv(
   x = cleaned_respondent_info,
   file = "inputs/data/cleaned_respondent_info.csv"
+)
+
+write_csv(
+  x = cleaned_women_in_politics,
+  file = "inputs/data/cleaned_women_in_politics.csv"
 )
 
  write_csv(
