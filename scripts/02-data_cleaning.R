@@ -59,13 +59,14 @@ raw_women_in_politics <-
   to_factor(raw_women_in_politics)
 raw_women_in_politics
 
-# Remove lines with NA #
+# Remove lines with NA, rename women in politics columns, and select relevant columns #
 cleaned_fepol =
   raw_women_in_politics |>
     drop_na("fepol") |>
   rename(
     women_in_politics = fepol,
-  )
+  ) |>
+  select(year, id, women_in_politics)
 cleaned_fepol
 
 cleaned_fepolv =
@@ -73,43 +74,40 @@ cleaned_fepolv =
   drop_na("fepolv") |>
     rename(
       women_in_politics = fepolv,
-    )
+    ) |>
+  select(year, id, women_in_politics)
 cleaned_fepolv
 
-  cleaned_fepolnv =
+cleaned_fepolnv =
     raw_women_in_politics |>
   drop_na("fepolnv")|>
     rename(
       women_in_politics = fepolnv,
-    )
-  cleaned_fepolnv
+    ) |>
+  select(year, id, women_in_politics)
+cleaned_fepolnv
 
-  
-# save fepol, fepolv, and fepolnv data #
+  # save fepol, fepolv, and fepolnv data #
   write_csv(
     x = cleaned_fepol,
     file = "cleaned_fepol.csv"
   )
-
+  
   write_csv(
     x = cleaned_fepolv,
     file = "cleaned_fepolv.csv"
   )
-
+  
   write_csv(
     x = cleaned_fepolnv,
     file = "cleaned_fepolnv.csv"
   )
-
-# Combine fepol, fepolv, and fepolnv columns #  
-  cleaned_women_in_politics =
-  merge(
-    cleaned_fepol,
-      cleaned_fepolv,
-      cleaned_fepolnv,
-      by = "women_in_politics"
-  )
-cleaned_women_in_politics
+  
+  # Merge three seperate women in politics data sets into one #
+  # Code referenced from: https://www.statmethods.net/management/merging.html
+   cleaned_women_in_politics <- rbind (cleaned_fepol, cleaned_fepolv, cleaned_fepolnv)
+   cleaned_women_in_politics
+     
  
  #### Clean political preferences data ####
  raw_political_preferences <-
@@ -134,6 +132,11 @@ summarized_political_preferences =
 (head(summarized_political_preferences))
 
  #### Save cleaned data ####
+write_csv(
+  x = cleaned_respondent_info,
+  file = "inputs/data/cleaned_respondent_info.csv"
+)
+
  write_csv(
    x = summarized_political_preferences,
    file = "inputs/data/summarized_political_preferences.csv"
