@@ -51,7 +51,7 @@ num_people <- 5000
 over_time <- tibble(
   person = 1:num_people,
   men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE), 
-  "time" = x <- sample(1974:2022, 5000, replace=T),
+  "year" = x <- sample(1974:2022, 5000, replace=T),
 )
 over_time
 
@@ -63,7 +63,7 @@ num_people <- 5000
 simulated_data <-tibble(
     person = 1:num_people,
 #use 1 through 7 to represent political views 
-    political_views = sample(c("1", "2", "3", "4", "5", "6", "7"), size = num_people, replace = TRUE),
+    political_views = sample(c("Extremely Liberal", "Liberal", "Slightly Liberal", "Moderate", "Slightly Conservative", "Conservative", "Extremely Conservative"), size = num_people, replace = TRUE),
 )
 simulated_data
 
@@ -75,7 +75,7 @@ num_people <- 5000
 simulate_data <-tibble(
   person = 1:num_people,
   #use 0 through 7 to represent political views 
-  party_affiliation = sample(c("0", "1", "2", "3", "4", "5", "6", "7"), size = num_people, replace = TRUE),
+  party_affiliation = sample(c("Strong Democrat", "Not Strong Democrat", "Independent, Close to Democrat", "Independent", "Independent, Close to Republican", "Not Strong Republican", "Strong Republican", "Other"), size = num_people, replace = TRUE),
 )
 simulate_data
 
@@ -85,8 +85,8 @@ num_people <- 5000
 
 simulated_data <-tibble(
   person = 1:num_people,
-  # use 1 through 3 to represent liberal views (extremely liberal, liberal, slightly liberal)
-  political_views = sample(c("1", "2", "3"), size = num_people, replace = TRUE),
+  # use 1 through 3 to represent liberal views 
+  political_views = sample(c("Extremely liberal", "Liberal", "Slightly liberal"), size = num_people, replace = TRUE),
   men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
 )
 simulated_data
@@ -97,8 +97,8 @@ num_people <- 5000
 
 simulated_data <-tibble(
   person = 1:num_people,
-  # use 5 through 7 to represent conservative views (slightly conservative, conservative, extremely conservative)
-  political_views = sample(c("5", "6", "7"), size = num_people, replace = TRUE),
+  # use 5 through 7 to represent conservative views 
+  political_views = sample(c("Slightly conservative", "Conservative", "Extremely conservative"), size = num_people, replace = TRUE),
   men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
 )
 simulated_data
