@@ -118,10 +118,20 @@ responses |>
 min(over_time$year) == 1974
 max(over_time$year) == 2022
 
-# Check that political views range from 1 through 7 #
-simulated_data$political_views |> min() == 1
-simulated_data$political_views |> max() == 7
+# Check political views range from Extremely liberal to Extremely conservative # 
+# Code referenced from: https://tellingstorieswithdata.com/02-drinking_from_a_fire_hose.html
+simulated_data$political_views |>
+  unique() == c("Extremely liberal", "Liberal", "Slightly liberal", "Moderate", "Slightly Conservative", "Conservative", "Extremely conservative")
 
-# Check that party affiliation ranges from 0 through 7 #
-simulate_data$party_affiliation |> min() == 0
-simulate_data$party_affiliation |> max() == 7
+simulated_data$political_views |>
+  unique() |>
+  length() == 7
+
+# Check party affiliation range from Strong Democrat to Other # 
+simulate_data$party_affiliation |>
+  unique() == c("Strong Democrat", "Not Strong Democrat", "Independent, Close to Democrat", "Independent", "Independent, Close to Republican", "Not Strong Republican", "Strong Republican", "Other")
+
+simulate_data$party_affiliation |>
+  unique() |>
+  length() == 8
+
