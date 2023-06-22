@@ -62,7 +62,7 @@ num_people <- 5000
 
 simulated_data <-tibble(
     person = 1:num_people,
-#use 1 through 7 to represent political views 
+#use Extremely liberal through Extremely conservative  to represent political views 
     political_views = sample(c("Extremely Liberal", "Liberal", "Slightly Liberal", "Moderate", "Slightly Conservative", "Conservative", "Extremely Conservative"), size = num_people, replace = TRUE),
 )
 simulated_data
@@ -74,7 +74,7 @@ num_people <- 5000
 
 simulate_data <-tibble(
   person = 1:num_people,
-  #use 0 through 7 to represent political views 
+  #use Strong Democrat through Other to represent political views 
   party_affiliation = sample(c("Strong Democrat", "Not Strong Democrat", "Independent, Close to Democrat", "Independent", "Independent, Close to Republican", "Not Strong Republican", "Strong Republican", "Other"), size = num_people, replace = TRUE),
 )
 simulate_data
@@ -104,15 +104,24 @@ simulated_data <-tibble(
 simulated_data
 
 #### Data Validation ####
-# Check that people can either agree or disagree with the statement that men are better suited for politics
+# Check that people can either agree or disagree with the statement that men are better suited for politics #
 population |>
 group_by(men_better_suited) |>
   summarise()
 
-# Check that political views range from 1 through 7
+# Check that people can either agree or disagree by gender with the statement that men are better suited for politics #
+responses |>
+  group_by(gender, men_better_suited) |>
+  summarise()
+
+# Check that responses range from 1974 to 2022 #
+min(over_time$year) == 1974
+max(over_time$year) == 2022
+
+# Check that political views range from 1 through 7 #
 simulated_data$political_views |> min() == 1
 simulated_data$political_views |> max() == 7
 
-# Check that party affiliation ranges from 0 through 7
+# Check that party affiliation ranges from 0 through 7 #
 simulate_data$party_affiliation |> min() == 0
 simulate_data$party_affiliation |> max() == 7
