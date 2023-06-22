@@ -119,17 +119,34 @@ min(over_time$year) == 1974
 max(over_time$year) == 2022
 
 # Check political views range from Extremely liberal to Extremely conservative # 
-# Code referenced from: https://tellingstorieswithdata.com/02-drinking_from_a_fire_hose.html
-simulated_data$political_views |>
-  unique() == c("Extremely liberal", "Liberal", "Slightly liberal", "Moderate", "Slightly Conservative", "Conservative", "Extremely conservative")
+# Code referenced from: https://github.com/christina-wei/Financial-Wellness-in-US/blob/main/scripts/03-test_data.R
+class(simulated_data$political_views) == "character"
+sum(!(simulated_data$political_views) %in%
+        c("Extremely Liberal",
+          "Liberal",
+          "Slightly Liberal",
+          "Moderate",
+          "Slightly Conservative",
+          "Conservative",
+          "Extremely Conservative",
+          NA)) == 0
 
 simulated_data$political_views |>
   unique() |>
   length() == 7
 
 # Check party affiliation range from Strong Democrat to Other # 
-simulate_data$party_affiliation |>
-  unique() == c("Strong Democrat", "Not Strong Democrat", "Independent, Close to Democrat", "Independent", "Independent, Close to Republican", "Not Strong Republican", "Strong Republican", "Other")
+class(simulate_data$party_affiliation) == "character"
+sum(!(unique(summarized_political_preferences$partyid) %in%
+        c("Strong Democrat",
+          "Not Strong Democrat",
+          "Independent, Close to Democrat",
+          "Independent",
+          "Independent, Close to Republican",
+          "Not Strong Republican",
+          "Strong Republican",
+          "Other",
+          NA))) == 0
 
 simulate_data$party_affiliation |>
   unique() |>
