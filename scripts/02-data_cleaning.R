@@ -44,7 +44,10 @@ cleaned_respondent_info =
     age,
     sex
   ) |>
-  filter(year > 1973)
+  filter(year > 1973) |>
+  mutate(
+   age = as.numeric(age)
+  ) 
 cleaned_respondent_info
 
 # Case Match #
