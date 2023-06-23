@@ -80,28 +80,41 @@ simulate_data <-tibble(
 simulate_data
 
 #### Simulate more liberal political views / disagree that men are emotionally better suited for politics ####
+# Code referenced from: https://tellingstorieswithdata.com/06-farm.html#probabilistic-sampling
 set.seed(416)
-num_people <- 5000
 
-simulated_data <-tibble(
-  person = 1:num_people,
-  # use 1 through 3 to represent liberal views 
-  political_views = sample(c("Extremely liberal", "Liberal", "Slightly liberal"), size = num_people, replace = TRUE),
-  men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
+simulated_data <- tibble(
+  unit = 1:5000,
+  men_better_suited =
+    sample(x = c("Agree", "Disagree"), 
+           size = 5000, 
+           replace = TRUE, 
+           prob = c(0.2, 0.8)), 
+  political_views =
+    sample(x = c("Liberal", "Extremely liberal"), 
+           size = 5000, 
+           replace = TRUE, 
+           prob = c(0.4, 0.6))
 )
-simulated_data
+simulated_data 
 
 #### Simulate more conservative views / agree that men are emotionally better suited for politics ####
 set.seed(416)
-num_people <- 5000
 
-simulated_data <-tibble(
-  person = 1:num_people,
-  # use 5 through 7 to represent conservative views 
-  political_views = sample(c("Slightly conservative", "Conservative", "Extremely conservative"), size = num_people, replace = TRUE),
-  men_better_suited = sample(c("Agree", "Disagree"), size = num_people, replace = TRUE)
+simulated_data <- tibble(
+  unit = 1:5000,
+  men_better_suited =
+    sample(x = c("Agree", "Disagree"), 
+           size = 5000, 
+           replace = TRUE, 
+           prob = c(0.8, 0.2)), 
+    political_views =
+    sample(x = c("Conservative", "Extremely conservative"), 
+           size = 5000, 
+           replace = TRUE, 
+           prob = c(0.4, 0.6))
 )
-simulated_data
+simulated_data 
 
 #### Data Validation ####
 # Check that people can either agree or disagree with the statement that men are better suited for politics #
