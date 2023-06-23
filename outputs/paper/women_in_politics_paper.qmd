@@ -48,8 +48,20 @@ show_col_types = FALSE
 ## Data
 
 
-### Respondent Information
+### Respondent Demographic Information
 
+```{r}
+#| message: false
+#| echo: false
+#| label: tbl-cleaned_respondent_info
+#| tbl-cap: Sample of Cleaned Respondent Demographic Information
+
+head (cleaned_respondent_info, 10) |>
+  kable(
+    col.names = c("Year", "ID", "Age",	"Gender"),
+  booktabs = TRUE
+  )
+```
 
 ### Perceptions of Women in Politics
 
