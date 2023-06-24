@@ -37,9 +37,9 @@ min(cleaned_respondent_info$age, na.rm = TRUE) >= 18
 max(cleaned_respondent_info$age, na.rm = TRUE) <= 90
 
 # Check that the gender of respondents are either male or female #
-class(cleaned_respondent_info$sex) == "character"
+class(cleaned_respondent_info$gender) == "character"
 cleaned_respondent_info |>
-  group_by(sex) |>
+  group_by(gender) |>
  summarise()
 
 #### Validate the cleaned women in politics data ####
