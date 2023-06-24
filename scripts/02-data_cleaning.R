@@ -35,7 +35,7 @@ raw_respondent_info <-
 raw_respondent_info <-
   to_factor(raw_respondent_info)
 
-# Select columns of interest # 
+# Select columns of interest, filter by relevant year, rename column # 
 cleaned_respondent_info = 
   raw_respondent_info |>
   select(
@@ -44,9 +44,12 @@ cleaned_respondent_info =
     age,
     sex
   ) |>
-  filter(year > 1973) |>
+  filter(year == 1974 | year == 1975 | year == 1977 | year == 1978 | year == 1982 | year == 1983 | year == 1985 | year == 1986 | year == 1988 | year == 1989 | year == 1990 | year == 1991 | year == 1993 | year == 1994 | year == 1996 | year == 1998 | year == 2000 | year == 2002 | year == 2004 | year == 2006 | year == 2008 | year == 2010 | year == 2012 | year == 2014 | year == 2016 | year == 2018 | year == 2021 | year == 2022) |>
   mutate(
    age = as.numeric(age)
+  )|>
+  rename(
+    gender = sex,
   ) 
 cleaned_respondent_info
 
@@ -54,11 +57,11 @@ cleaned_respondent_info
 #Code referenced from: https://tellingstorieswithdata.com/02-drinking_from_a_fire_hose.html 
 cleaned_respondent_info <-
   cleaned_respondent_info |>
-  mutate("sex" = case_when(
-    sex == 1 ~ "Male",
-    sex == 2 ~ "Female",
+  mutate("gender" = case_when(
+    gender == 1 ~ "Male",
+    gender == 2 ~ "Female",
   )) |>
-select(year, id, age, sex)
+select(year, id, age, gender) 
 cleaned_respondent_info
   
 
