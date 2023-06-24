@@ -151,12 +151,13 @@ cleaned_fepolnv
  cleaned_political_preferences <-
    clean_names(raw_political_preferences)
  
- # Remove lines with NA #
+ # Remove lines with NA & select specific years #
 summarized_political_preferences = 
  cleaned_political_preferences |>
    drop_na("polviews") |>
-  drop_na("partyid")
-(head(summarized_political_preferences))
+  drop_na("partyid") |>
+  filter(year == 1974 | year == 1975 | year == 1977 | year == 1978 | year == 1982 | year == 1983 | year == 1985 | year == 1986 | year == 1988 | year == 1989 | year == 1990 | year == 1991 | year == 1993 | year == 1994 | year == 1996 | year == 1998 | year == 2000 | year == 2002 | year == 2004 | year == 2006 | year == 2008 | year == 2010 | year == 2012 | year == 2014 | year == 2016 | year == 2018 | year == 2021 | year == 2022)
+summarized_political_preferences
 
 # Case match #
 summarized_political_preferences <-
