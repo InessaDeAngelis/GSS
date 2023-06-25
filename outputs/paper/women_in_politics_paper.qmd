@@ -1,7 +1,7 @@
 ---
 title: "My title"
 author: "Inessa De Angelis"
-thanks: "Code and data from this analysis are available at: https://github.com/InessaDeAngelis/Perceptions_of_Women_in_Politics "
+thanks: "Code and data are available at: https://github.com/InessaDeAngelis/Perceptions_of_Women_in_Politics "
 date: "today"
 date-format: "long"
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
@@ -27,6 +27,7 @@ library(here)
 library(ggplot2)
 library(ggbeeswarm)
 library(ggrepel)
+library(modelsummary)
 
 # Read in cleaned respondent info data #
 cleaned_respondent_info <- read.csv(here::here("outputs/data/cleaned_respondent_info.csv"))
@@ -39,16 +40,38 @@ show_col_types = FALSE
 # Read in summarized voter statistics data #
 summarized_political_preferences <- read.csv(here::here("outputs/data/summarized_political_preferences.csv"))
 show_col_types = FALSE
+
+combined_data = 
+  merge(
+    cleaned_respondent_info,
+    summarized_political_preferences,
+    by = c("year", "id")
+  )
+
 ```
 
-## Introduction 
+# Introduction 
+Despite changing norms and perceptions, women are largely still missing from elected office in the United States (U.S.), Canada, and across the world. In 2023, the U.S. elected a historic number of  women to the House of Representatives with 125 (or 28.7%) and 25 to the Senate (or 25%) [@rutgers]. The current Vice President, Kamala Harris, is the first woman to hold this office. Although the number of women elected to the highest levels of government in the U.S. is inching toward gender-parity, progress is slow and hard fought. Womens’ credibility and perceived power as politicians is impacted by gendered framing by traditional media, priming members of the public to hold biased views about their qualifications [@deGeus]. Framing refers to how information is chosen, interpreted, and presented by the media, influencing the audience’s perception of it as important and shaping their own decision making procedures [@bashevkin]. Previous research has shown that the American public is open to voting for a female president and that gender stereotypes are playing less of a role in the construction of public image and voting behaviours [@StereotypingQs]. However, gender stereotypes continue to be a factor in perceptions of the viability of women to serve as elected officials. 
+
+To gain a further understanding of the gendered stereotypes about the perceived emotional viability of women to serve in politics, I track responses by political party affiliation and ideology, using data obtained from the General Statistical Survey (GSS) from NORC [@gss] at the University of Chicago. These perceptions of women in politics are then analyzed to understand their correlations with demographic factors such as gender and age, as well as tracking the perceptions over time. 
+
+My analysis emphasizes that perceptions of women in politics have generally improved over time since the early 1970s, with a small dip in the early 2010s. 
+	
+In the remainder of this paper, I commence with the Data section which outlines the nature of the data obtained, limitations, and cleaning procedures. In the Results section, I present trends found during the analysis process. Then, in the Discussion section, I provide further insights and future areas of study. In the Conclusion, I summarize the main findings. Lastly, the Appendix contains a supplemental survey which proposes additional questions to study perceptions of women in politics. 
+
+# Data
+The data used in this paper was retrieved from the US General Social Survey (GSS) from NORC at the University of Chicago [@gss]. I obtained both demographic data and data relating to the perceived emotional viability of women in politics, political party affiliation and ideology, from 1974 to 2022.
+
+## Data Cleaning
+Data was collected, cleaned, and analyzed using the statistical programming software R [@r], using functions from `tidyverse` [@rTidyverse], `ggplot2` [@rGgplot2], `dplyr` [@rDplyr], `readr` [@rReadr], `tibble` [@rTibble], `janitor` [@rJanitor], `KableExtra` [@rKableExtra], `knitr` [@rknitr], `ggbeeswarm` [@rggbeeswarm], `ggrepel` [@rggrepel], `labelled` [@rLabelled], `haven` [@rHaven], and `here` [@rHere]. 
+
+## Data Limitations
+
+### Gap in 2020 Data
+Data from the year 2020 is not recorded and instead spans 2020 and 2021, which is inconsistent with the typically yearly GSS. There was also a shift in methodology, as previously discussed, to address risks from the Covid-19 pandemic which changed the type of people accessible for those conducting the GSS questionnaire. 
 
 
-
-## Data
-
-
-### Respondent Demographic Information
+## Respondent Demographic Information
 
 ```{r}
 #| message: false
@@ -56,29 +79,88 @@ show_col_types = FALSE
 #| label: tbl-cleaned_respondent_info
 #| tbl-cap: Sample of Cleaned Respondent Demographic Information
 
-head (cleaned_respondent_info, 10) |>
+head(cleaned_respondent_info) |>
   kable(
     col.names = c("Year", "ID", "Age",	"Gender"),
   booktabs = TRUE
   )
+
+cleaned_respondent_info |>
+  summarise(
+    youngest = min(age, na.rm = TRUE),
+    oldest = max(age, na.rm = TRUE),
+    average = mean(age, na.rm = TRUE)
+  )
+
+cleaned_respondent_info |>
+  count(gender) |>
+  mutate(proportion = n / (sum(n)))
+
+cleaned_respondent_info |>
+  count(age) |>
+  mutate(proportion = n / (sum(n)))
+
+cleaned_respondent_info |>
+  count(year) |>
+  mutate(proportion = n / (sum(n))) |>
+  
 ```
 
-### Perceptions of Women in Politics
+## Perceptions of Women in Politics
+
+```{r}
+#| message: false
+#| echo: false
+#| label: tbl-cleaned_women_in_politics_info
+#| tbl-cap: Sample of Cleaned Women in Politics Information
+
+head(cleaned_women_in_politics) |>
+  kable(
+    col.names = c("Year", "ID", "Women in Politics"),
+  booktabs = TRUE
+  )
+
+cleaned_women_in_politics |>
+  count(women_in_politics) |>
+  mutate(proportion = n / (sum(n))) |>
+  
+```
+
+## Political Preferences
+
+```{r}
+#| message: false
+#| echo: false
+#| label: tbl-summarized_political_preferences
+#| tbl-cap: Sample of Summarized Political Preferences
+
+head(summarized_political_preferences) |>
+  kable(
+    col.names = c("Year", "ID", "Political Views", "Party Id"),
+  booktabs = TRUE
+  )
+```
+
+# Results
 
 
-### Political Preferences
+# Discussion
 
 
-## Results
+# Conclusion
 
 
-## Discussion
+# Appendix {.unnumbered}
+The supplemental survey is available here: https://forms.gle/EFj72QiGS3fo186z5 
+
+## Survey Preamble 
+The General Social Survey collects information and maintains a historical record of respondents' attitudes, experiences, concerns, and practices. In order to strengthen the understanding of perceptions of women in politics, these questions are designed to better understand what socio-economic, cultural, and political factors and conditions contribute to a person's notion of whether women are fit to serve in elected political office, lead efforts to advance specific policy agendas, and increase the number of women elected to all levels of government.
+
+This survey is voluntary and responses are anonymous. If you decide to participate, you can skip questions and withdraw at any time. Individual responses will be recorded in my dataset using a user identification number.
+
+Thank you for taking the time to complete this survey. Please contact inessa.deangelis@mail.utoronto.ca if you have questions or require any further information.
+
+## Survey Questions
 
 
-## Conclusion
-
-
-## Appendix {.unnumbered}
-
-
-## References
+# References
