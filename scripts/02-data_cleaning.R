@@ -156,37 +156,37 @@ summarized_political_preferences =
  cleaned_political_preferences |>
    drop_na("polviews") |>
   drop_na("partyid") |>
-  filter(year == 1974 | year == 1975 | year == 1977 | year == 1978 | year == 1982 | year == 1983 | year == 1985 | year == 1986 | year == 1988 | year == 1989 | year == 1990 | year == 1991 | year == 1993 | year == 1994 | year == 1996 | year == 1998 | year == 2000 | year == 2002 | year == 2004 | year == 2006 | year == 2008 | year == 2010 | year == 2012 | year == 2014 | year == 2016 | year == 2018 | year == 2021 | year == 2022)
+  filter(year == 1974 | year == 1975 | year == 1977 | year == 1978 | year == 1982 | year == 1983 | year == 1985 | year == 1986 | year == 1988 | year == 1989 | year == 1990 | year == 1991 | year == 1993 | year == 1994 | year == 1996 | year == 1998 | year == 2000 | year == 2002 | year == 2004 | year == 2006 | year == 2008 | year == 2010 | year == 2012 | year == 2014 | year == 2016 | year == 2018 | year == 2021 | year == 2022) |>
+  rename(
+    political_views = polviews,
+    party_ideology = partyid,
+  )
 summarized_political_preferences
 
 # Case match #
 summarized_political_preferences <-
   summarized_political_preferences |>
-  mutate("polviews" = case_when(
-    polviews == 1 ~ "Extremely Liberal",
-    polviews == 2 ~ "Liberal",
-    polviews == 3 ~ "Slightly Liberal",
-    polviews == 4 ~ "Moderate",
-    polviews == 5 ~ "Slightly Conservative",
-    polviews == 6 ~ "Conservative",
-    polviews == 7 ~ "Extremely Conservative"
+  mutate("political_views" = case_when(
+    political_views == 1 ~ "Extremely Liberal",
+    political_views == 2 ~ "Liberal",
+    political_views == 3 ~ "Slightly Liberal",
+    political_views == 4 ~ "Moderate",
+    political_views == 5 ~ "Slightly Conservative",
+    political_views == 6 ~ "Conservative",
+    political_views == 7 ~ "Extremely Conservative"
   )) |>
-  mutate("partyid" = case_when(
-    partyid == 0 ~ "Strong Democrat",
-    partyid == 1 ~ "Not Strong Democrat",
-    partyid == 2 ~ "Independent, Close to Democrat",
-    partyid == 3 ~ "Independent",
-    partyid == 4 ~ "Independent, Close to Republican",
-    partyid == 5 ~ "Not Strong Republican",
-    partyid == 6 ~ "Strong Republican",
-    partyid == 7 ~ "Other"
+  mutate("party_ideology" = case_when(
+    party_ideology == 0 ~ "Strong Democrat",
+    party_ideology == 1 ~ "Not Strong Democrat",
+    party_ideology == 2 ~ "Independent, Close to Democrat",
+    party_ideology == 3 ~ "Independent",
+    party_ideology == 4 ~ "Independent, Close to Republican",
+    party_ideology == 5 ~ "Not Strong Republican",
+    party_ideology == 6 ~ "Strong Republican",
+    party_ideology == 7 ~ "Other"
   )) |>
-  select(year, id, polviews, partyid)
-summarized_political_preferences |>
-  rename(
-    political_views = polviews,
-    party_ideology = partyid,
-  )
+  select(year, id, political_views, party_ideology)
+summarized_political_preferences
 
  #### Save cleaned data ####
 write_csv(
@@ -203,5 +203,4 @@ write_csv(
    x = summarized_political_preferences,
    file = "outputs/data/summarized_political_preferences.csv"
  )
-
  
