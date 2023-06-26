@@ -182,7 +182,11 @@ summarized_political_preferences <-
     partyid == 7 ~ "Other"
   )) |>
   select(year, id, polviews, partyid)
-summarized_political_preferences
+summarized_political_preferences |>
+  rename(
+    political_views = polviews,
+    party_ideology = partyid,
+  )
 
  #### Save cleaned data ####
 write_csv(
