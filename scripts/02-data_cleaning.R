@@ -175,17 +175,17 @@ summarized_political_preferences <-
     political_views == 6 ~ "Conservative",
     political_views == 7 ~ "Extremely Conservative"
   )) |>
-  mutate("party_ideology" = case_when(
-    party_ideology == 0 ~ "Strong Democrat",
-    party_ideology == 1 ~ "Not Strong Democrat",
-    party_ideology == 2 ~ "Independent, Close to Democrat",
-    party_ideology == 3 ~ "Independent",
-    party_ideology == 4 ~ "Independent, Close to Republican",
-    party_ideology == 5 ~ "Not Strong Republican",
-    party_ideology == 6 ~ "Strong Republican",
-    party_ideology == 7 ~ "Other"
+  mutate("party_identification" = case_when(
+    party_identification == 0 ~ "Strong Democrat",
+    party_identification == 1 ~ "Not Strong Democrat",
+    party_identification == 2 ~ "Independent, Close to Democrat",
+    party_identification == 3 ~ "Independent",
+    party_identification == 4 ~ "Independent, Close to Republican",
+    party_identification == 5 ~ "Not Strong Republican",
+    party_identification == 6 ~ "Strong Republican",
+    party_identification == 7 ~ "Other"
   )) |>
-  select(year, id, political_views, party_ideology)
+  select(year, id, political_views, party_identification)
 summarized_political_preferences
 
  #### Save cleaned data ####
