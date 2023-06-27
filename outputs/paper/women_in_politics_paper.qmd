@@ -491,12 +491,136 @@ The supplemental survey is available here: https://forms.gle/EFj72QiGS3fo186z5
 ## Survey Preamble 
 The General Social Survey collects information and maintains a historical record of respondents' attitudes, experiences, concerns, and practices. In order to strengthen the understanding of perceptions of women in politics, these questions are designed to better understand what socio-economic, cultural, and political factors and conditions contribute to a person's notion of whether women are fit to serve in elected political office, lead efforts to advance specific policy agendas, and increase the number of women elected to all levels of government.
 
-This survey is voluntary and responses are anonymous. If you decide to participate, you can skip questions and withdraw at any time. Individual responses will be recorded in my dataset using a user identification number.
+This survey is voluntary and responses are anonymous. If you decide to participate, you can skip questions and withdraw at any time. Individual responses will be recorded in my data set using a user identification number.
 
 Thank you for taking the time to complete this survey. Please contact inessa.deangelis@mail.utoronto.ca if you have questions or require any further information.
 
 ## Survey Questions
+  (@) If you identify as a visible minority, what is your specific group?
 
+  -Black
+  
+  -Chinese
+  
+  -Filipino
+  
+  -Japanese
+  
+  -Korean
+  
+  -South Asian-East Indian
+  
+  -Southeast Asian
+  
+  -North African 
+  
+  -Arab 
+  
+  -I do not identify as a visible minority
+  
+  -Other (please specify)
+  
+
+(@) What town or city do you live in?
+
+(short answer text)
+
+
+(@) What state do you live in?
+
+(short answer text)
+
+
+(@) How often do you engage with politics and political content?
+
+  -Daily
+  
+  -A few times a week
+  
+  -A few times a month
+  
+  -Rarely 
+  
+  -Never
+  
+  
+  (@) Where do you go to seek out political content?
+  
+  -Social media
+  
+  -Traditional media
+  
+  -Events
+  
+  -Other
+  
+  
+  (@) Does the gender of a candidate matter more than their political affiliations?
+  
+  -Yes
+  
+  -No
+  
+  -Indifferent
+  
+  
+  (@) Does the gender of a candidate matter more than their political ideology?
+  
+  -Yes
+  
+  -No
+  
+  -Indifferent
+  
+  
+  (@) Does the gender of a candidate matter more than their policies?
+  
+  -Yes
+  
+  -No
+  
+  -Indifferent
+  
+ 
+  (@) What is the most important factoring when deciding which candidate to support in an election?
+  
+  -Gender
+  
+  -Personal characteristics
+  
+  -Leadership skills
+  
+  -Ideology
+  
+  -Political affiliation
+  
+  -Policies
+  
+  -Other
+  
+  
+  (@) Do you think women possess the leadership skills required to serve in elected office?
+  
+  -Yes
+  
+  -No
+  
+  
+(@) Do you think women can effectively manage political policies?
+  
+  -Yes
+  
+  -No
+  
+
+(@) Is the current political climate supportive of women seeking elected office?
+  
+  -Yes
+  
+  -No
+  
+  -Somewhat
+  
 ## Submission Message
 Thank you for taking the time to complete this survey. Your answers will help expand our understanding of perceptions of women in politics. 
 
