@@ -41,6 +41,7 @@ show_col_types = FALSE
 summarized_political_preferences <- read.csv(here::here("outputs/data/summarized_political_preferences.csv"))
 show_col_types = FALSE
 
+# Create merged data sets #
 combined_data = 
   merge(
     cleaned_respondent_info,
@@ -58,7 +59,41 @@ finalized_data =
    year = as.character(year)
   )
 
-options(scipen = n)
+# Create filtered data sets for specific variables and responses #
+liberal_data = 
+  finalized_data |>
+  select(year, id, gender, political_views, women_in_politics) |>
+  filter(political_views == "Liberal" | political_views == "Slightly Liberal" | political_views == "Extremely Liberal")
+
+conservative_data = 
+  finalized_data |>
+  select(year, id, gender, political_views, women_in_politics) |>
+  filter(political_views == "Conservative" | political_views == "Slightly Conservative" | political_views == "Extremely Conservative")
+
+moderate_data = 
+  finalized_data |>
+  select(year, id, gender, political_views, women_in_politics) |>
+  filter(political_views == "Moderate")
+
+democrat_data =
+  finalized_data |>
+  select(year, id, gender, party_identification, women_in_politics) |>
+  filter(party_identification == "Strong Democrat" | party_identification == "Not Strong Democrat" | party_identification == "Independent, Close to Democrat")
+
+republican_data =
+  finalized_data |>
+  select(year, id, gender, party_identification, women_in_politics) |>
+  filter(party_identification == "Strong Republican" | party_identification == "Not Strong Republican" | party_identification == "Independent, Close to Republican")
+
+independent_data =
+  finalized_data |>
+  select(year, id, gender, party_identification, women_in_politics) |>
+  filter(party_identification == "Independent")
+
+other_data =
+  finalized_data |>
+  select(year, id, gender, party_identification, women_in_politics) |>
+  filter(party_identification == "Other")
 ```
 
 # Introduction 
@@ -84,7 +119,7 @@ For demographic data, I obtained the following data, as outlined in @tbl-demogra
 
 : Demographic data obtained from GSS {#tbl-demographic}
 
-As noted in @tbl-women_in_pol, I obtained this data relating to the emotional viability of women in serve in politics. The survey question for all three variables asks *"Tell me if you agree or disagree with this statement: Most men are better suited emotionally for politics than are most women"* [@gssCodebook]. A further discussion of these variables can be found later on in this section. 
+As noted in @tbl-women_in_pol, I obtained this data relating to the emotional viability of women in serve in politics. The survey question for all three variables asks *"Tell me if you agree or disagree with this statement: Most men are better suited emotionally for politics than are most women"* [@gssCodebook]. Going forward, I will refer to this as the "women in politics question". A further discussion of these variables can be found later on in this section. 
 
 | Variable  | New Name          | Description                                   | Example  |
 |-----------|-------------------|-----------------------------------------------|----------|
@@ -157,7 +192,7 @@ During face-to-face interviews, interviewers traditionally coded the `sex` varia
 
 During the data cleaning process, I renamed the `sex` column to `gender`, with the value 1 updated to "Male", and the value 2 updated to "Female" based on the GSS codebook [@gssCodebook].
 
-Despite the changing survey methodology, respondents were still asked to identify their age in the web and mixed-method surveys. The yougest survey respondents are 18 and the oldest are 89, with the average age of respondents being 47. See @tbl-cleaned_respondent_info for a sample of the cleaned respondent demographic information.
+Despite the changing survey methodology, respondents were still asked to identify their age in the web and mixed-method surveys. See @tbl-cleaned_respondent_info for a sample of the cleaned respondent demographic information.
 
 ```{r}
 #| message: false
@@ -198,7 +233,7 @@ cleaned_women_in_politics |>
 ## Political Preferences
 During the data cleaning process, I renamed the `polviews` column to `political_views`, with the value 1 updated to "Extremely liberal", 2 updated to "Liberal", 3 updated to “Slightly liberal,” 4 updated to “Moderate”, 5 updated to “Slightly conservative”, 6 updated to “Conservative”, and 7 to “Extremely conservative” based on the GSS codebook [@gssCodebook].
  
-Furthermore, during the data cleaning process I renamed the `partyid` column to `party_identification`. I then changed value 0 to “Strong Democrat, 1 to "Not Strong Democrat", 2 to "Independent, Close to Democrat", 3 to “Independent”, 4 to "Independent, Close to Republican", 5 to "Not Strong Republican", 6 to "Strong Republican", and 7 to “Other", based on the GSS codebook [@gssCodebook]. See @tbl-summarized_political_preferences for a sample of the cleaned data.  
+Furthermore, during the data cleaning process I renamed the `partyid` column to `party_identification`. I then changed value 0 to “Strong Democrat", 1 to "Not Strong Democrat", 2 to "Independent, Close to Democrat", 3 to “Independent”, 4 to "Independent, Close to Republican", 5 to "Not Strong Republican", 6 to "Strong Republican", and 7 to “Other", based on the GSS codebook [@gssCodebook]. See @tbl-summarized_political_preferences for a sample of the cleaned data.  
 
 ```{r}
 #| message: false
@@ -217,7 +252,7 @@ summarized_political_preferences |>
 
 # Results
 ## Respondent Demographics
-Between 1974 and 2022, there were 37,0005 responses recorded for GSS surveys which specifically asked the women in politics, political views, and party identification questions. Of these respondents, 20,609 (55.7%) identifying as female, with 16,346 (44.2%) identifying as male, and 50 (0.1%) opting not to share their **gender** (see @tbl-gender_summary).
+Between 1974 and 2022, there were 37,005 responses recorded for GSS surveys which specifically asked the women in politics, political views, and party identification questions. Of these respondents, 20,609 (55.7%) identified as female, with 16,346 (44.2%) identifying as male, and 50 (0.1%) opting not to share their **gender** (see @tbl-gender_summary).
 
 ```{r}
 #| message: false
@@ -247,16 +282,6 @@ The age of survey respondents ranged from 18 to 89, with the highest number of r
 #| tbl-cap: Age of Respondents
 
 finalized_data |>
-  group_by(age) |>
-  count() |>
-  ungroup() |>
-  mutate (pct = percent(n / sum(n), digit = 1)) |>
-  kable(
-    col.names = c("Age", "Number of Responses", "Percentage"),
-    booktabs = TRUE
-  )
-
-finalized_data |>
  summarize(
     youngest = min(age, na.rm = TRUE),
     oldest = max(age, na.rm = TRUE),
@@ -264,34 +289,44 @@ finalized_data |>
   )
 ```
 
+## Perceptions of Women in Politics 
+Despite the biased wording of GSS' women in politics survey question, respondents largely disagreed that men are generally more emotionally suited then women to serve in politics. 74.3% of respondents, spanning 1974-2022, disagree with the question, while 25.7% agree. We can see in @tbl-women_in_pol_summary that women disagree with the question at a higher rate (41.9%), compared to men (32.3%). @tbl-women_in_pol_summary also highlights that women agree with the question at a slightly higher rate then men (13.8% compared to 11.8%). 8 people (0.0%) agreed with the question without sharing their **gender**, while 42 people (0.1%) disagreed. 
+
 ```{r}
 #| message: false
 #| echo: false
 #| warning: false
-#| label: tbl-polviews_summary
-#| tbl-cap: Political Views
+#| label: tbl-women_in_pol_summary
+#| tbl-cap: Women in Politics
 
 finalized_data |>
-  group_by(political_views) |>
+  group_by(women_in_politics, gender) |>
   count() |>
   ungroup() |>
   mutate (pct = percent(n / sum(n), digit = 1)) |>
   kable(
-    col.names = c("Political Views", "Number of Responses", "Percentage"),
+    col.names = c("Women in Politics", "Gender", "Number of Responses", "Percentage"),
     booktabs = TRUE
   )
+```
 
-finalized_data |>
-  group_by(party_identification) |>
-  count() |>
-  ungroup() |>
-  mutate (pct = percent(n / sum(n), digit = 1)) |>
-  kable(
-    col.names = c("Party Identification", "Number of Responses", "Percentage"),
-    booktabs = TRUE
-  )
+## Political Views
+Responses to the women in politics question varies by political views, with people who identify as having more liberal views disagreeing and people with more conservative views agreeing. Liberal views refers to anyone who self-identified in GSS as having `slightly liberal`, `liberal`, or `extremely liberal` views. Conservative views accounts for anyone who self-identified as having `slightly conservative`, `conservative`, or `extremely conservative` views. 
 
-finalized_data |>
+As outlined in @tbl-polviews_lib, we can see that 8,625 people (81.4%) who self identify as holding liberal views disagree with the women in politics question, while 1,965 people (18.6%) agree. @tbl-polviews_con highlights that 8,472 people (67.8%) who self identify as holding conservative views disagree with the women in politics question, while 4,015 people (32.2%) agree. 
+
+Lastly, we can see in @tbl-polviews_moderate that among people who self identify as holding moderate views, 10,405 people (74.7%) disagree with the women in politics question, while 3,523 people (25.3%) agree. 
+
+The number of people with liberal views who disagree with the question that men are emotionally better suited for politics then women is comparable to the hypothesized number, while the people with conservative views who agree is not as high as anticipated. 
+
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-polviews_lib
+#| tbl-cap: Responses to Women in Politics by Political Views- Liberal
+
+liberal_data |>
   group_by(women_in_politics) |>
   count() |>
   ungroup() |>
@@ -300,6 +335,148 @@ finalized_data |>
     col.names = c("Women in Politics", "Number of Responses", "Percentage"),
     booktabs = TRUE
   )
+
+```
+
+``` {r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-polviews_con
+#| tbl-cap: Responses to Women in Politics by Political Views- Conservative
+
+conservative_data |>
+  group_by(women_in_politics) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) |>
+  kable(
+    col.names = c("Women in Politics", "Number of Responses", "Percentage"),
+    booktabs = TRUE
+  )
+```
+
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-polviews_moderate
+#| tbl-cap: Responses to Women in Politics by Political Views- Moderate
+
+moderate_data |>
+  group_by(women_in_politics) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) |>
+  kable(
+    col.names = c("Women in Politics", "Number of Responses", "Percentage"),
+    booktabs = TRUE
+  )
+```
+
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-women_polviews_gender
+#| tbl-cap: Responses to Women in Politics by Political Views & Gender
+
+liberal_data |>
+  group_by(women_in_politics, gender) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) |>
+  kable(
+    col.names = c("Women in Politics", "Gender", "Number of Responses", "Percentage"),
+    booktabs = TRUE
+  )
+```
+
+## Party Identification 
+Responses to the question whether men are more emotionally suited for politics then women varies by American political party affiliation. People who self-identify as aligning with the Democrats disagree at a higher percent then people who self-identify as aligning with the Republicans. Aligning with the Democrats refers to anyone who self-identified in GSS as `Strong Democrat`, `Not Strong Democrat`, or `Independent, Close to Democrat`. Aligning with the Republicans accounts for anyone who self-identified as `Strong Republican`, `Not Strong Republican`, or `Independent, Close to Republican`. `Independent` refers to people who self identify with neither the Democrats or Republicans and `Other` accounts for people who align with a third party or candidate. 
+
+@tbl-partyid_dem reveals that 13,869 people (77%) who self identify as being affiliated with the Democrats disagree with the women in politics question while 4,146 people (23%) agree with the question. 
+
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-partyid_dem
+#| tbl-cap: Responses to Women in Politics by Party Identification- Democrat
+
+democrat_data |>
+  group_by(women_in_politics) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) |>
+  kable(
+    col.names = c("Women in Politics", "Number of Responses", "Percentage"),
+    booktabs = TRUE
+  )
+
+```
+
+As illustrated by @tbl-partyid_rep, 8,853 people (68.2%) who self identify as being affiliated with the Republicans disagree with the women in politics question while 4,121 people (31.8%) agree with the question. 
+
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-partyid_rep
+#| tbl-cap: Responses to Women in Politics by Party Identification- Republican
+
+republican_data |>
+  group_by(women_in_politics) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) |>
+  kable(
+    col.names = c("Women in Politics", "Number of Responses", "Percentage"),
+    booktabs = TRUE
+  )
+
+```
+
+@tbl-partyid_ind shows that 4,294 people (79.2%) who self identify as being Independent from a political party disagree with the women in politics question while 1,128 people (20.8%) agree with the question. 
+
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-partyid_ind
+#| tbl-cap: Responses to Women in Politics by Party Identification- Independent
+
+independent_data|>
+  group_by(women_in_politics) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) |>
+  kable(
+    col.names = c("Women in Politics", "Number of Responses", "Percentage"),
+    booktabs = TRUE
+  )
+
+```
+
+Finally, @tbl-partyid_other demonstrates that 486 people (81.8%) who self identify as being affiliated with a third party disagree with the women in politics question while 108 people (18.2%) agree with the question. 
+
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-partyid_other
+#| tbl-cap: Responses to Women in Politics by Party Identification- Other
+
+other_data |>
+  group_by(women_in_politics) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) |>
+  kable(
+    col.names = c("Women in Politics", "Number of Responses", "Percentage"),
+    booktabs = TRUE
+  )
+
 ```
 
 # Discussion
