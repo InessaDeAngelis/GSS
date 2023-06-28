@@ -1,5 +1,7 @@
+# Women on the Ballot? Investigating how the American Public Perceives the Emotional Viability of Women to Serve in Politics since 1974
+
 ## Overview of Paper
-This paper analyzes GSS data from 1974 through 2022 to see the changing notions of the perceived emotional viability of women in politics over time, by gender, and by political ideology. 
+This paper analyzes General Social Survey (GSS) data from 1974 through 2022 to understand how demographic factors, political views, and party identification impact perceptions of the emotional viability of women to serve in politics
 
 ## File Structure
 
