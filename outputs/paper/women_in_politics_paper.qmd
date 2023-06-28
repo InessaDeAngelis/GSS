@@ -4,7 +4,7 @@ author: "Inessa De Angelis"
 thanks: "Code and data are available at: https://github.com/InessaDeAngelis/Perceptions_of_Women_in_Politics "
 date: "today"
 date-format: "long"
-abstract: "At current rates, the World Economic Forum estimates that it will take at least 100 years to reach gender parity in politics. Despite progress in recent years, why is it slated to take so long? Utilizing data from The General Social Survey (GSS), this paper analyzes responses from the American public between 1974 and 2022 to begin to understand how demographic factors, political views, and party identification impact perceptions of the emotional viability of women to serve in politics. This data reveals XXX."
+abstract: "At current rates, the World Economic Forum estimates that it will take at least 100 years to reach gender parity in politics. Despite progress in recent years, why is it slated to take so long? Utilizing data from The General Social Survey (GSS), this paper analyzes responses from the American public between 1974 and 2022 to begin to understand how demographic factors, political views, and party identification impact perceptions of the emotional viability of women to serve in politics. This data reveals that despite gendered media framing, Americans largely perceive female politicians as having the emotional capabilities to hold elected office."
 format: pdf
 toc: true
 number-sections: true
@@ -103,7 +103,7 @@ To gain a further understanding of the gendered stereotypes about the perceived 
 
 My analysis emphasizes that perceptions of women in politics have generally improved over time since the early 1970s, with a small dip in the early 2010s. 
 	
-In the remainder of this paper, I commence with the Data section which outlines the nature of the data obtained, limitations, and cleaning procedures. In the Results section, I present trends found during the analysis process. Then, in the Discussion section, I provide further insights and future areas of study. In the Conclusion, I summarize the main findings. Lastly, the Appendix contains a supplemental survey which proposes additional questions to study perceptions of women in politics. 
+In the remainder of this paper, I commence with the [Data] section which outlines the nature of the data obtained, limitations, and cleaning procedures. In the [Results] section, I present trends found during the analysis process. Then, in the [Discussion] section, I provide further insights and future areas of study. In the [Conclusion], I summarize the main findings. Lastly, the [Appendix] contains a supplemental survey which proposes additional questions to study perceptions of women in politics. 
 
 # Data
 The data used in this paper was retrieved from the US General Social Survey (GSS) from NORC at the University of Chicago [@gss]. I obtained both demographic data and data relating to the perceived emotional viability of women in politics, political party affiliation and identification, from 1974 to 2022.
@@ -147,13 +147,19 @@ The 2022 GSS bridges the methodology from both the traditional face-to-face data
 Previous iterations of GSS selected respondents by quota (1972-1976), Kish grid with age ordering (1975-2018), and last birthday (2021). The 2022 GSS shifts to a Kish grid without age ordering, where adults in the household are selected by their order in the household, not age [@gssCodebook]. These changes to the selection of respondents, especially considering technological literacy among older populations may impact the survey results from 2021 and 2022. 
 
 ### Gap in 2020 Data
-Data from the year 2020 is not recorded and instead spans 2020 and 2021, which is inconsistent with the typically yearly GSS. There was also a shift in methodology, as previously discussed, to address risks from the Covid-19 pandemic which changed which people were selected and how they completed the GSS questionnaire.
+Data from the year 2020 is not recorded and instead spans 2020 and 2021, which is inconsistent with the typically yearly GSS. There was also a shift in methodology, as previously discussed, to address risks from the Covid-19 pandemic which changed which people were selected and how they completed the GSS questionnaire. There was item non-response when respondents start the survey but some answers are missing (Stantcheva, p. 3).
+
+
+### N/A Responses
+Historically, the GSS has achieved high response rates well above 50 percent, mostly because
+in-person surveys can attain higher response rates. The 2021 GSS was conducted using a mail invite to push the respondent to the web. The 2021 GSS Cross-section response rate is 17 percent (which is still high for web surveys).
+
 
 ### Impact on this study
 Although the majority of the data utilized for this study was obtained prior to the Covid-19 pandemic, the 2021 and 2022 responses may be impacted by the changes in methodology and political context during and following the 2020 election. 2020 was a presidential election year in the United States, which saw Joe Biden and Kamala Harris (Democrat) beat Donald Trump and Mike Pence (Republican). Paired with a changing world and policy responses to the Covid-19 pandemic, whether it be mass-vaccination campaigns, stimulus cheques, or relief plans, respondents’ political views and party identification answers may be impacted. As well, Kamala Harris as a woman of colour on the Democrat ticket may have influenced responses to the women in politics survey question. Despite the significant methodological changes and political climate underpinning the 2021 and 2022 GSS, this will have less of an impact on long-term visualizations and trends.
 
 ## Data Cleaning
-Data was collected, cleaned, and analyzed using the statistical programming software R [@r], using functions from `tidyverse` [@rTidyverse], `ggplot2` [@rGgplot2], `dplyr` [@rDplyr], `readr` [@rReadr], `tibble` [@rTibble], `janitor` [@rJanitor], `KableExtra` [@rKableExtra], `knitr` [@rknitr], `ggbeeswarm` [@rggbeeswarm], `ggrepel` [@rggrepel], `labelled` [@rLabelled], `haven` [@rHaven], and `here` [@rHere]. 
+Data was collected, cleaned, and analyzed using the statistical programming software R [@r], using functions from `tidyverse` [@rTidyverse], `ggplot2` [@rGgplot2], `dplyr` [@rDplyr], `readr` [@rReadr], `tibble` [@rTibble], `janitor` [@rJanitor], `KableExtra` [@rKableExtra], `knitr` [@rknitr], `ggbeeswarm` [@rggbeeswarm], `ggrepel` [@rggrepel], `labelled` [@rLabelled], `haven` [@rHaven], `Formattable` [@rFormattable], and `here` [@rHere]. 
 
 After downloading and selecting the variables of interest from GSS [@gss], I performed data cleaning based on the variable definitions outlined in the GSS codebook [@gssCodebook]. I removed the years in which the questions asking whether men are better suited emotionally for politics than women, political views, and party identification were not asked (the raw data set would display answers for those years as NA). I updated the respondent demographic information data set to reflect the years omitted, given that these demographic questions are asked every year. 
 
@@ -210,7 +216,7 @@ head(cleaned_respondent_info) |>
 ```
 
 ## Perceptions of Women in Politics
-Despite the changing variable names to account for newer survey methods, the question asking whether men are emotionally better suited for politics than women harkens back to the 1970s, despite the strides being made toward gender equality in American politics.  The phrasing of the question asking whether men are better emotionally suited is a leading question which is biased and primes the respondent to think about women in a specific way. Women are framed by traditional media and those on social media as being emotional, high strung, and not possessing “manly” leadership skills, so asking whether men are more emotionally suited over women reinforces traditional media framing and stereotypes [@fallfromgrace] [@bashevkin]. The media never asks men about their emotions or covers their behaviour in the public eye through the lens of being emotional and the same should be expected for the media coverage of women in politics.  GSS should consider asking future respondents in future iterations of the survey about leadership qualities, relevant experience, and ability to address crucial policy areas. Questions such as these are addressed in the supplement survey in the Appendix. 
+Despite the changing variable names to account for newer survey methods, the question asking whether men are emotionally better suited for politics than women harkens back to the 1970s, despite the strides being made toward gender equality in American politics.  The phrasing of the question asking whether men are better emotionally suited is a leading question which is biased and primes the respondent to think about women in a specific way. Women are framed by traditional media and those on social media as being emotional, high strung, and not possessing “manly” leadership skills, so asking whether men are more emotionally suited over women reinforces traditional media framing and stereotypes [@fallfromgrace] [@bashevkin]. The media never asks men about their emotions or covers their behaviour in the public eye through the lens of being emotional and the same should be expected for the media coverage of women in politics.  GSS should consider asking future respondents in future iterations of the survey about leadership qualities, relevant experience, and ability to address crucial policy areas. Questions such as these are addressed in the supplement survey in the [Appendix]. 
 
 Although this women in politics question is biased, the survey data can present interesting trends which will be discussed later in this paper. See @tbl-cleaned_women_in_politics for a sample of the cleaned data.  
 
@@ -481,9 +487,40 @@ other_data |>
 
 # Discussion
 
+## What was done
+
+## What we learned
+Despite assumptions and previous research, this GSS data illustrated that perceptions of the emotional viability of woment to serve in politics is not as negative and that public is more supportive of women running for elected office then anticipated.
+
+## What we further learned
+
+## Limitations
+Asking people about their political views and potential party affiliation remain sensitive topics, despite progress made since the 1970s. As a result, some people may not be comfortable answering these questions which limits the diversity in potential responses collected by GSS. Furthermore, previous research has shown that people may mask their true beliefs when asked about topics such as the viability of women to serve in elected office [@StereotypingQs], which could impact the quality of the data collected and number of "NA" and “don’t know” answers.
+
+Politics and political views are much more nuanced then agreeing or disagreeing with survey questions, so without an opportunity for people to explain their views, important information which helps contextualize why they do or do not believe women are emotionally viable to serve in elected office is missed. 
+
+The phrasing of the women in politics survey question, as previously discussed, does not account for current progress made toward gender equality, nor today's hybrid media environment and the role that social media plays in disseminating political rhetoric and shaping the images of political candidates. It is challenging to know the extent of which these factors impact GSS' data and should be accounted for in upcoming iterations of the survey. 
+
+Finally, the change in methodology due to the Covid-19 pandemic may have impacted more recent responses, especially since access to reliable internet, cell phone service, and technological literacy are not a given among all people. 
+
+## Future Research
+### Supplemental Survey 
+The acceptance of women as political leaders depends on several factors beyond their perceived emotional qualities. Therefore, I prepared a supplemental survey (available in the [Appendix]) to ask respondents about other factors that could impact their views and provide space for further contextualization. 
+
+Previous research reveals that other perceived qualities about political candidates (especially female candidates) such as their leadership skills, highest level of education attained, and their ability to manage "serious" policy issues such as the economy can impact their electoral chances [@fallfromgrace]. Accordingly, the supplemental survey includes questions such as *"Do you think women possess the leadership skills required to serve in elected office?"*, *"Does the gender of a candidate matter more than their policies?"*, and *"What is the most important factoring when deciding which candidate to support in an election?"* I hypothesize that perceived leadership skills and the ability to manage important policy issues impact whether respondents decide to vote for female candidates. 
+
+As well, I would like to find out more from respondents, through the question *"Is the current political climate supportive of women seeking elected office?"* if the political climate and not the candidates are part of the problem with achieving gender equality. Responses to this question can also inform directions for future studies. 
+
+### Possible Studies
+There are many socio-economic, cultural, and demographic factors beyond an individual's age and gender that inform voting behaviours and perceptions of what constitutes a good political candidate. Consequently, future research should look at the intersection of race and identity, income, and highest level of education attained with these questions about political views, party identification, and the emotional viability of women to run for office.  
+
+If media framing and political rhetoric are not solely shaping public attitudes towards women in politics, then what is causing the low success rate of electing women to office? Future studies should analyze political party structures, including candidate recruitment, the workplace culture in city halls, state legislatures, the House of Representatives, and the Senate, and the role of social media to help understand and correct course. 
+
+A specific future study should investigate the intersection of political views, party identification, and the emotional viability of women to run for office questions with respondents' voting intentions and voting outcomes during the 2016 presidential election which saw Hillary Clinton (Democrat) face off against Donald Trump (Republican). The GSS variables `vote16`, `pres16`, and `if16who` could provide interesting data and insights [@gssCodebook]. 
 
 # Conclusion
 
+We cannot let gender equality take 100 years of hard-fought victories to materialize.
 
 # Appendix {.unnumbered}
 The supplemental survey is available here: https://forms.gle/EFj72QiGS3fo186z5 
