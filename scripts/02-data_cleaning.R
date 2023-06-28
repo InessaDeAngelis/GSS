@@ -121,7 +121,7 @@ cleaned_fepolnv
     file = "cleaned_fepolnv.csv"
   )
   
-  # Merge three seperate women in politics data sets into one #
+  # Merge three separate women in politics data sets into one #
   # Code referenced from: https://www.statmethods.net/management/merging.html
    cleaned_women_in_politics <- rbind (cleaned_fepol, cleaned_fepolv, cleaned_fepolnv)
    cleaned_women_in_politics
