@@ -105,6 +105,20 @@ other_data =
   select(year, id, gender, party_identification, women_in_politics) |>
   filter(party_identification == "Other")
 
+age_data = 
+  finalized_data |>
+  group_by(age, women_in_politics) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) 
+
+time_data = 
+  finalized_data |>
+   group_by(year, women_in_politics) |>
+  count() |>
+  ungroup() |>
+  mutate (pct = percent(n / sum(n), digit = 1)) 
+ 
 ```
 
 # Introduction 
@@ -314,15 +328,18 @@ The breakdown of responses by age to the women in politics question is visible i
 #| tbl-cap: Women in Politics by Age
 
 finalized_data |>
-  group_by(women_in_politics, age) |>
-  count() |>
-  ungroup() |>
-  mutate (pct = percent(n / sum(n), digit = 1)) |>
-  kable(
-    col.names = c("Women in Politics", "Age", "Number of Responses", "Percentage"),
-    booktabs = TRUE
-  )
-  
+  ggplot(mapping = aes(x = age, fill = women_in_politics)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(
+    x = "Age",
+    y = "Year",
+    fill = "Women in politics"
+  ) +
+  facet_wrap(vars(women_in_politics), scales = "free") +
+  guides(x = guide_axis(angle = 90)) +
+  theme(legend.position = "bottom")
+
 ```
 
 ```{r}
@@ -542,10 +559,10 @@ Overall, the data reveals that despite gendered framing by traditional media tha
 As hypothesized, women disagreed with the question whether men are emotionally suited for politics then them at a high rate (see @tbl-women_in_pol_summary). It is noteworthy that women also agree with the question at a slightly higher rate then men (13.8% versus 11.8%)
 
 ## Perceptions of Women in Politics by Political Views 
-The number of people with liberal views who disagree with the question that men are emotionally better suited for politics then women is comparable to the hypothesized number, while the people with conservative views who agree is not as high as anticipated, but still aligns with my hypothesis (see @tbl-polviews_moderate). My hypothesis did not account for people with moderate views as the way people with moderate views feel about specific policy issues and survey questions is not consistent nor align with a political party. However, in the case of the women in politics survey question, the people who identified as moderate aligned closely with the people with liberal views. 
+The number of people with liberal views who disagree with the question that men are emotionally better suited for politics then women is comparable to the hypothesized number, while the people with conservative views who agree is not as high as anticipated, but still aligns with my hypothesis (see @tbl-polviews_moderate). My hypothesis did not account for people with moderate views as the way people with moderate views feel about specific policy issues and survey questions is not consistent nor aligns with a political party. However, in the case of the women in politics survey question, the people who identified as moderate aligned with the people with liberal views. 
 
-### Perceptions of Women in Politics - Liberals vs Moderates 
-Defining a "moderate" voter in American politics proves challenging and is a weakness of this survey (further discussed in [Limitations]). Scholars often view moderates as holding similar (but not identical) views to liberals on some issues. Data from GSS reveals in @fig-moderate_liberal that people with moderate views and people with liberal views hold very similar views to the women in politics question. While there is often significant disagreement between liberals, conservatives, and sometimes moderates in American politics, it is noteworthy that moderates align so closely with one faction on this question.
+### Perceptions of Women in Politics - Liberals versus Moderates 
+Defining a "moderate" voter in American politics proves challenging and is a weakness of this survey (further discussed in [Limitations]). Scholars view moderates as not simply holding "middle of the road views", rather sharing views with either liberals or conservatives on occasion if the social, economic, or political context aligns with their beliefs [@moderates]. Data from GSS reveals in @fig-moderate_liberal that people with moderate views and people with liberal views hold similar views to the women in politics question (81.4% versus 74.7%). While there is often significant disagreement between liberals, conservatives, and sometimes moderates in American politics, it is noteworthy that moderates align so closely with one faction on this question.
 
 ```{r}
 #| message: false
