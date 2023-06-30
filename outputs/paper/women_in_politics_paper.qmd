@@ -307,7 +307,7 @@ Despite the biased wording of GSS' women in politics survey question, respondent
 #| echo: false
 #| warning: false
 #| label: tbl-women_in_pol_summary
-#| tbl-cap: Women in Politics
+#| tbl-cap: Perceptions of Women in Politics
 
 finalized_data |>
   group_by(women_in_politics, gender) |>
@@ -323,7 +323,7 @@ finalized_data |>
 
 @fig-women_in_pol_year_gender illustrates how perceptions of women in politics by gender have risen and fallen over time. We can see that both men and women agreed the most frequently with the premise that men are emotionally better suited for politics then women in 1975, 1977, and 1978 and disagreed the most frequently with this premise in 2021 and 2022. The 1985 and 1986 surveys witnessed an increase of both men and women who agree with the women in politics question, then another increase of women who agree with the question in the 1994, 1996, 1998, and 2000 surveys. The number of both men and women who agreed with the women in politics question rose again slightly in 2006 and 2016. Despite slight fluctuations in more recent years, the number of respondents who agree with the premise that men are emotionally better suited for politics has never reached the same levels as when GSS began asking this question in the 1970s. 
 
-The number of respondents by gender who disagree with the women in politics question has fluctuated slightly less over time. The 1994, 1996, 1998, and 2000 surveys saw an increase in the number of women and men who disagree with the premise that men are emotionally better suited for politics, along with 2006 and 2016. 
+The number of respondents by gender who disagree with the women in politics question has fluctuated slightly less over time (see @fig-women_in_pol_year_gender). The 1994, 1996, 1998, and 2000 surveys saw an increase in the number of women and men who disagree with the premise that men are emotionally better suited for politics, along with 2006 and 2016. 
 
 ```{r}
 #| message: false
@@ -351,9 +351,7 @@ finalized_data |>
 ## Political Views
 Responses to the women in politics question varies by political views, with people who identify as having more liberal views disagreeing and people with more conservative views agreeing. Liberal views refers to anyone who self-identified in GSS as having `slightly liberal`, `liberal`, or `extremely liberal` views. Conservative views accounts for anyone who self-identified as having `slightly conservative`, `conservative`, or `extremely conservative` views. 
 
-As outlined in @tbl-polviews_lib, we can see that 8,625 people (81.4%) who self identify as holding liberal views disagree with the women in politics question, while 1,965 people (18.6%) agree. @tbl-polviews_con highlights that 8,472 people (67.8%) who self identify as holding conservative views disagree with the women in politics question, while 4,015 people (32.2%) agree. 
-
-Lastly, we can see in @tbl-polviews_moderate that among people who self identify as holding moderate views, 10,405 people (74.7%) disagree with the women in politics question, while 3,523 people (25.3%) agree. 
+As outlined in @tbl-polviews_lib, we can see that 8,625 people (81.4%) who self identify as holding liberal views disagree with the women in politics question, while 1,965 people (18.6%) agree.
 
 ```{r}
 #| message: false
@@ -374,6 +372,78 @@ liberal_data |>
 
 ```
 
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: fig-polviews_all
+#| fig-cap: Responses by all Political Views: Women in Politics
+
+finalized_data |>
+  ggplot(mapping = aes(x = political_views, fill = women_in_politics)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle=90, size = 10)) + 
+  labs(x = "Political Views", y = "Number of Responses", fill = "Women in Politics") +
+  theme(legend.position = "bottom")
+
+finalized_data |>
+  ggplot(mapping = aes(x = year, fill = women_in_politics)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle=90, size = 10)) + 
+  labs(x = "Year", y = "Number of Responses", fill = "Women in Politics") +
+  theme(legend.position = "bottom")
+
+finalized_data |>
+  ggplot(mapping = aes(x = year, fill = gender)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(
+    x = "Year",
+    y = "Number of respondents",
+    fill = "Women in Politics"
+  ) +
+  facet_wrap(vars(women_in_politics)) +
+  guides(x = guide_axis(angle = 90)) +
+  theme(legend.position = "bottom")
+
+finalized_data |>
+  ggplot(mapping = aes(x = year, fill = women_in_politics)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(
+    x = "Year",
+    y = "Number of respondents",
+    fill = "Women in Politics"
+  ) +
+  facet_wrap(vars(political_views)) +
+  guides(x = guide_axis(angle = 90)) +
+  theme(legend.position = "bottom") +
+  theme(axis.text.x = element_text(angle=90, size = 5)) 
+
+#Code for the colour referenced from: https://tellingstorieswithdata.com/05-static_communication.html#bar-charts
+finalized_data |>
+  ggplot(mapping = aes(x = year, fill = political_views)) +
+  geom_bar() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=90, size = 8)) +
+  labs(x = "Year", y = "Number of Respondents", fill = "Political Views") +
+  theme(legend.position = "bottom") +
+  theme(legend.text = element_text(size = 7)) +
+  scale_fill_viridis_d(option = "viridis") 
+
+finalized_data |>
+  ggplot(mapping = aes(x = year, fill = party_identification)) +
+  geom_bar() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=90, size = 8)) +
+  labs(x = "Year", y = "Number of Respondents", fill = "Party Identification") +
+  theme(legend.position = "bottom") +
+  theme(legend.text = element_text(size = 5)) +
+  scale_fill_viridis_d(option = "viridis") 
+```
+
+@tbl-polviews_con highlights that 8,472 people (67.8%) who self identify as holding conservative views disagree with the women in politics question, while 4,015 people (32.2%) agree. 
+
 ``` {r}
 #| message: false
 #| echo: false
@@ -391,6 +461,8 @@ conservative_data |>
     booktabs = TRUE
   )
 ```
+
+Lastly, we can see in @tbl-polviews_moderate that among people who self identify as holding moderate views, 10,405 people (74.7%) disagree with the women in politics question, while 3,523 people (25.3%) agree. 
 
 ```{r}
 #| message: false
@@ -428,6 +500,18 @@ liberal_data |>
   )
 ```
 
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+#| label: tbl-women_polviews_gender1
+#| tbl-cap: Responses to Women in Politics by Political Views & Gender
+
+finalized_data |>
+  ggplot(mapping = aes(x = year, y = age, color = party_identification)) +
+  geom_point()
+
+```
 ## Party Identification 
 Responses to the question whether men are more emotionally suited for politics then women varies by American political party affiliation. People who self-identify as aligning with the Democrats disagree at a higher percent then people who self-identify as aligning with the Republicans. Aligning with the Democrats refers to anyone who self-identified in GSS as `Strong Democrat`, `Not Strong Democrat`, or `Independent, Close to Democrat`. Aligning with the Republicans accounts for anyone who self-identified as `Strong Republican`, `Not Strong Republican`, or `Independent, Close to Republican`. `Independent` refers to people who self identify with neither the Democrats or Republicans and `Other` accounts for people who align with a third party or candidate. 
 
@@ -524,8 +608,10 @@ As hypothesized, women disagree with the question whether men are emotionally su
 ## Perceptions of Women in Politics by Political Views 
 The number of people with liberal views who disagree with the question that men are emotionally better suited for politics then women is comparable to the hypothesized number, while the people with conservative views who agree is not as high as anticipated, but still aligns with my hypothesis (see @tbl-polviews_moderate). My hypothesis did not account for people with moderate views as the way people with moderate views feel about specific policy issues and survey questions is not consistent nor aligns with a political party. However, in the case of the women in politics survey question, the people who identified as moderate aligned with the people with liberal views. 
 
-### Perceptions of Women in Politics - Liberals versus Moderates 
-Defining a "moderate" voter in American politics proves challenging and is a weakness of this survey (further discussed in [Limitations]). Scholars view moderates as not simply holding "middle of the road views", rather sharing views with either liberals or conservatives on occasion if the social, economic, or political context aligns with their beliefs [@moderates]. Data from GSS reveals in @fig-moderate_liberal that people with moderate views and people with liberal views hold similar views to the women in politics question (81.4% versus 74.7%). While there is often significant disagreement between liberals, conservatives, and sometimes moderates in American politics, it is noteworthy that moderates align so closely with one faction on this question.
+### Perceptions of Women in Politics - Moderates versus Liberals & Conservatives 
+Defining a "moderate" voter in American politics proves challenging and is a weakness of this survey (further discussed in [Limitations]). Scholars view moderates as not simply holding "middle of the road views", rather sharing views with either liberals or conservatives on occasion if the social, economic, or political context aligns with their beliefs [@moderates]. Data from GSS reveals that people with moderate views fall in between people with liberal views and people with conservative views when both agreeing and disagreeing with the women in politics question.We can see in @fig-moderate_liberal that people with moderate views and people with liberal views hold similar views to the women in politics question (81.4% versus 74.7%). In contrast,  @fig-moderate_conservative highlights that people with moderate views and people with conservative views hold differing views (67.8% versus 74.7%)
+
+While there is often significant disagreement between liberals, conservatives, and sometimes moderates in American politics, it is noteworthy that moderates hold "middle of the road views" on this question [@moderates].
 
 ```{r}
 #| message: false
