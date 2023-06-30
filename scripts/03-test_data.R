@@ -62,8 +62,8 @@ sum(is.na(summarized_political_preferences$year)) == 0
 
 # Check political views range from Extremely liberal to Extremely conservative # 
 # Code referenced from: https://github.com/christina-wei/Financial-Wellness-in-US/blob/main/scripts/03-test_data.R
-class(summarized_political_preferences$polviews) == "character"
-sum(!(unique(summarized_political_preferences$polviews) %in%
+class(summarized_political_preferences$political_views) == "character"
+sum(!(unique(summarized_political_preferences$political_views) %in%
         c("Extremely Liberal",
           "Liberal",
           "Slightly Liberal",
@@ -73,13 +73,13 @@ sum(!(unique(summarized_political_preferences$polviews) %in%
           "Extremely Conservative",
           NA))) == 0
 
-summarized_political_preferences$polviews |>
+summarized_political_preferences$political_views |>
   unique() |>
   length() == 7
 
 # Check party ids range from Strong Democrat to Other # 
-class(summarized_political_preferences$partyid) == "character"
-sum(!(unique(summarized_political_preferences$partyid) %in%
+class(summarized_political_preferences$party_identification) == "character"
+sum(!(unique(summarized_political_preferences$party_identification) %in%
         c("Strong Democrat",
           "Not Strong Democrat",
           "Independent, Close to Democrat",
@@ -90,7 +90,7 @@ sum(!(unique(summarized_political_preferences$partyid) %in%
           "Other",
           NA))) == 0
 
-summarized_political_preferences$partyid |>
+summarized_political_preferences$party_identification |>
   unique() |>
   length() == 8
   
