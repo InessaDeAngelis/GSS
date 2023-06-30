@@ -150,7 +150,7 @@ simulated_data$political_views |>
 
 # Check party affiliation range from Strong Democrat to Other # 
 class(simulate_data$party_affiliation) == "character"
-sum(!(unique(summarized_political_preferences$partyid) %in%
+sum(!(unique(simulate_data$party_affiliation) %in%
         c("Strong Democrat",
           "Not Strong Democrat",
           "Independent, Close to Democrat",
