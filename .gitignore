@@ -44,3 +44,8 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Data
+**/cleaned_fepol.csv
+**/cleaned_fepolnv.csv
+**/cleaned_fepolv.csv
