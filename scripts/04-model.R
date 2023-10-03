@@ -33,17 +33,52 @@ show_col_types = FALSE
 women_in_pol <-
 cleaned_women_in_politics |>
  mutate(women_in_politics) 
-analysis_data <- merge(cleaned_respondent_info, women_in_pol)
+analysis_data <- merge(cleaned_respondent_info, women_in_pol) |>
+  mutate("age" = case_when(
+    age >= 18 & age <= 29 ~ "18-29",
+    age >= 30 & age <= 39 ~ "30-39",
+    age >= 40 & age <= 49 ~ "40-49",
+    age >= 50 & age <= 64 ~ "50-64",
+    age >= 65 & age <= 79 ~ "65-79",
+    age >= 79 ~ "80-89"
+  ))
 
 # Test combined data set #
 class(analysis_data$year) == "integer"
 class(analysis_data$id) == "integer"
-class(analysis_data$age) == "integer"
+class(analysis_data$age) == "character"
 class(analysis_data$gender) == "character"
 class(analysis_data$women_in_politics) == "character"
 
-#### Model data ####
-model <- lm(age ~ women_in_politics, data = analysis_data)
-model
+# Make binary data set with whether they agree or disagree #
+analysis_data_binary <-
+  analysis_data |>
+  select(age, women_in_politics) |>
+  mutate(women_binary = if_else(women_in_politics == "Agree",
+                                1,
+                                0))
 
-summary(model)
+# Test binary data set #
+class(analysis_data_binary$age) == "character"
+class(analysis_data_binary$women_in_politics) == "character"
+class(analysis_data_binary$women_binary) == "numeric"
+
+#### Model data ####
+age_and_gender <-
+  glm(
+    women_binary ~ age, 
+    data = analysis_data_binary,
+    family = "binomial"
+  )
+age_and_gender
+
+summary(age_and_gender)
+
+# Save model #
+saveRDS(age_and_gender, "Outputs/model/age_and_gender.rds")
+
+# Predictions #
+age_and_gender_predictions <-
+  predictions(age_and_gender) |>
+  as_tibble()
+age_and_gender_predictions
