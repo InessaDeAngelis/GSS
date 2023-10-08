@@ -91,7 +91,7 @@ age_and_gender_predictions|>
   ggplot(aes(x = age, y = estimate, color = women_binary)) +
   geom_jitter(width = 0.2, height = 0.0, alpha = 0.3) +
   labs(
-    x = "Severity of Harassment",
+    x = "Age of Respondent",
     y = "Estimated probability that an age group supports women in politics",
     color = "Women in Politics"
   ) +
