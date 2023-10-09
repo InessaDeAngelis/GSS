@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Models the data
 # Author: Inessa De Angelis
-# Date: 5 October 2023
+# Date: 9 October 2023
 # Contact: inessa.deangelis@mail.utoronto.ca
 # License: MIT
 # Pre-requisites:
@@ -29,7 +29,7 @@ show_col_types = FALSE
 summarized_political_preferences <- read_csv(here::here("outputs/data/summarized_political_preferences.csv"))
 show_col_types = FALSE
 
-# Create combined demographic info and women in pol data sets for analysis #
+# Create specific data set for analysis #
 women_in_pol <-
   cleaned_women_in_politics |>
   mutate(women_in_politics) 
@@ -98,3 +98,6 @@ modelsummary(
   ),
   statistic = "mad"
 )
+
+modelplot(age_gender_women, conf_level = 0.9) +
+  labs(x = "90 per cent credibility interval")
