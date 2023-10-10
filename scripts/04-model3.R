@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Models the data
 # Author: Inessa De Angelis
-# Date: 9 October 2023
+# Date: 10 October 2023
 # Contact: inessa.deangelis@mail.utoronto.ca
 # License: MIT
 # Pre-requisites:
@@ -32,11 +32,22 @@ show_col_types = FALSE
 # Create specific data set for analysis #
 women_in_pol <-
   cleaned_women_in_politics |>
-  mutate(women_in_politics) 
-analysis_data <- merge(cleaned_respondent_info, women_in_pol) 
+  mutate(year, id, women_in_politics)
 
-analysis_data_2 <-
-  analysis_data |>
+pol_views <-
+  summarized_political_preferences |>
+  select(year,id, political_views) 
+
+analysis_data <- merge(women_in_pol, pol_views) 
+
+demographic_info <-
+  cleaned_respondent_info |>
+  select(year, id, gender)
+
+final_analysis_data <- merge(analysis_data, demographic_info)
+
+analysis_data_3 <-
+  final_analysis_data |>
   mutate(
     women_in_politics = case_when(
       women_in_politics == "Agree" ~ 1,
@@ -48,56 +59,50 @@ analysis_data_2 <-
       gender == "Female" ~ 2,
     ),
     gender = as_factor(gender),
-    age = case_when(
-      age >= 18 & age <= 29 ~ "18-29",
-      age >= 30 & age <= 39 ~ "30-39",
-      age >= 40 & age <= 49 ~ "40-49",
-      age >= 50 & age <= 64 ~ "50-64",
-      age >= 65 & age <= 79 ~ "65-79",
-      age >= 79 ~ "80-89"
-    ),
-    age = factor(
-      age,
-      levels = c(
-        "18-29",
-        "30-39",
-        "40-49",
-        "50-64",
-        "65-79",
-        "80-89"
-      )
-    )
+  political_views = case_when(
+    political_views == "Extremely Liberal" ~ 1,
+    political_views == "Liberal" ~ 2,
+    political_views == "Slightly Liberal" ~ 3,
+    political_views == "Moderate" ~ 4,
+    political_views == "Slightly Conservative" ~ 5,
+    political_views == "Conservative" ~ 6,
+    political_views == "Extremely Conservative" ~ 7
+  ),
+  political_views = as_factor(political_views)
   ) |>
-  select(women_in_politics, gender, age)
+select(women_in_politics, gender, political_views)
 
 #### Model ####
-age_gender_women <-
+gender_women_polviews <-
   stan_glm(
-    women_in_politics ~ gender + age,
-    data = analysis_data_2,
+    women_in_politics ~ gender + political_views,
+    data = analysis_data_3,
     family = binomial(link = "logit"),
-    prior = normal(location = 0, scale = 3, autoscale = TRUE),
+    prior = normal(location = 0, scale = 4, autoscale = TRUE),
     prior_intercept = 
-      normal(location = 0, scale = 3, autoscale = TRUE),
+      normal(location = 0, scale = 4, autoscale = TRUE),
     seed = 16
   )
-age_gender_women
+gender_women_polviews
 
 # Save model #
 saveRDS(
-age_gender_women, file = "Outputs/model/age_gender_women.rds"
+  gender_women_polviews, file = "Outputs/model/gender_women_polviews.rds"
 )
 
 # Interpretation #
-age_gender_women <-
-  readRDS(file = "age_gender_women.rds")
+gender_women_polviews <-
+  readRDS(file = "Outputs/model/gender_women_polviews.rds")
 
 modelsummary(
   list(
-    "Support Women in Pol" = age_gender_women
+    "Support Women in Politics" = gender_women_polviews
   ),
   statistic = "mad"
 )
 
-modelplot(age_gender_women, conf_level = 0.9) +
-  labs(x = "90 per cent credibility interval")
+# Predictions #
+gender_women_polviews_predictions <-
+  predictions(gender_women_polviews) |>
+  as_tibble()
+gender_women_polviews_predictions
