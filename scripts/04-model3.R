@@ -72,6 +72,13 @@ analysis_data_3 <-
   ) |>
 select(women_in_politics, gender, political_views)
 
+# Test combined data set #
+class(analysis_data_3$women_in_politics) == "factor"
+class(analysis_data_3$gender) == "factor"
+class(analysis_data_3$political_views) == "factor"
+nrow(analysis_data_3) == 37005
+
+
 #### Model ####
 gender_women_polviews <-
   stan_glm(
@@ -106,3 +113,18 @@ gender_women_polviews_predictions <-
   predictions(gender_women_polviews) |>
   as_tibble()
 gender_women_polviews_predictions
+
+# Graph #
+gender_women_polviews_predictions|>
+  ggplot(aes(x = political_views, y = estimate, color = women_in_politics)) +
+  geom_jitter(width = 0.2, height = 0.0, alpha = 0.3) +
+  labs(
+    x = "Political Views",
+    y = "Estimated probability that an age group supports women in politics",
+    color = "Women in Politics"
+  ) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle=45, hjust = 1, size = 10)) + 
+  theme(legend.position = "bottom") +
+  theme(legend.text = element_text(size = 6)) +
+  theme(legend.title = element_text(size = 9)) 
