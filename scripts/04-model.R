@@ -113,7 +113,7 @@ gender_women_polviews_predictions <-
   as_tibble()
 gender_women_polviews_predictions
 
-# Graph #
+# Graph Predictions #
 gender_women_polviews_predictions |>
   ggplot(aes(x = political_views, y = estimate, color = women_in_politics)) +
   geom_jitter(width = 0.2, height = 0.0, alpha = 0.3) +
@@ -127,6 +127,10 @@ gender_women_polviews_predictions |>
   theme(legend.position = "bottom") +
   theme(legend.text = element_text(size = 6)) +
   theme(legend.title = element_text(size = 9)) 
+
+# Credibility Interval Graph #
+modelplot(gender_women_polviews, conf_level = 0.9) +
+  labs(x = "90 per cent credibility interval")
 
 # Estimates only #
 just_the_estimates <-
