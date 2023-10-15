@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Models the data
+# Purpose: Creates a logistic regression to model the data
 # Author: Inessa De Angelis
 # Date: 10 October 2023
 # Contact: inessa.deangelis@mail.utoronto.ca
@@ -46,6 +46,39 @@ demographic_info <-
 
 final_analysis_data <- merge(analysis_data, demographic_info)
 
+# NEW: Create analysis data with political views labeled and factored # 
+# Code referenced from: https://tellingstorieswithdata.com/13-ijaglm.html #
+analysis_data_4 <-
+  final_analysis_data |>
+  mutate(
+    women_in_politics = case_when(
+      women_in_politics == "Agree" ~ 1,
+      women_in_politics == "Disagree" ~ 2,
+    ),
+    women_in_politics = as_factor(women_in_politics),
+    gender = as_factor(gender),
+    political_views = factor(
+      political_views,
+      levels = c(
+        "Extremely Liberal",
+        "Liberal",
+        "Slightly Liberal",
+        "Moderate",
+        "Slightly Conservative",
+        "Conservative",
+        "Extremely Conservative"
+      )
+    )
+    ) |>
+      select(women_in_politics, gender, political_views)
+
+# Test combined data set #
+class(analysis_data_4$women_in_politics) == "factor"
+class(analysis_data_4$gender) == "factor"
+class(analysis_data_4$political_views) == "factor"
+nrow(analysis_data_4) == 37005
+
+# OLD: Create analysis data with political views labelled numerically and factored # 
 analysis_data_3 <-
   final_analysis_data |>
   mutate(
@@ -82,7 +115,7 @@ nrow(analysis_data_3) == 37005
 gender_women_polviews <-
   stan_glm(
     women_in_politics ~ gender + political_views,
-    data = analysis_data_3,
+    data = analysis_data_4,
     family = binomial(link = "logit"),
     prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
     prior_intercept = 

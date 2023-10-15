@@ -8,7 +8,8 @@ abstract: "At current rates, the World Economic Forum estimates that it will tak
 keywords:
   - "Gender stereotypes" 
   - "Gender roles"
-  - "Media bias"
+  - "Women in politics"
+  - "Surveys"
 format: pdf
 toc: true
 number-sections: true
@@ -551,7 +552,7 @@ $$ {#eq-gender_women_polviews}
 
 Where $y_i$ is the respondent's views on women in politics and equal to 1 if they agree that men are emotionally better suited and 2 if they disagree, $\mbox{gender}_i$ is the gender of the respondent and $\mbox{political views}_i$ is the political views of the respondent.
 
-The estimates displayed in @fig-modelresults suggest that women are 8% more likely then men to disagree that men are emotionally better suited for politics than women, aligning with results from this study and previous findings from other scholars. When respondents who identified as having `Extremely Liberal` political views are compared to those with `Liberal` and `Slightly Liberal` views, `Liberals` are 33% less likely to support women in politics and `Slightly Liberals` are 54% less likely. When compared to respondents with `Extremely Liberal` political views, `Moderates` are 79% less likely to believe that women are emotionally better suited for politics than men, an interesting observation which is worth further analysis. People with `Slightly Conservative` views, when compared to people with `Extremely Liberal` views are 90% less likely to believe women are emotionally suited for politics, while people with `Conservative` and `Extremely Conservative` views are over 100% not likely to believe that women are emotionally suited for politics. These results align with previous research on views about women in politics by ideological divide, although the views of `Moderates` should be further examined in the [Results] section
+The estimates displayed in @fig-modelresults suggest that women are 8% more likely then men to disagree that men are emotionally better suited for politics than women, aligning with results from this study and previous findings from other scholars. When respondents who identified as having `Extremely Liberal` political views are compared to those with `Liberal` and `Slightly Liberal` views, `Liberals` are 33% less likely to support women in politics and `Slightly Liberals` are 54% less likely. When compared to respondents with `Extremely Liberal` political views, `Moderates` are 79% less likely to believe that women are emotionally better suited for politics than men, an interesting observation which is worth further analysis. People with `Slightly Conservative` views, when compared to people with `Extremely Liberal` views are 90% less likely to believe women are emotionally suited for politics, while people with `Conservative` and `Extremely Conservative` views are over 100% not likely to believe that women are emotionally suited for politics. These results align with previous research on views about women in politics by ideological divide, although the views of `Moderates` will be further examined in the [Results] section
 
 ```{r}
 #| echo: false
@@ -561,8 +562,6 @@ The estimates displayed in @fig-modelresults suggest that women are 8% more like
 #| message: false
 #| warning: false
 
-# note to self: need to re-label variables to say actual names
-
 gender_women_polviews <- readRDS(here::here("Outputs/model/gender_women_polviews.rds"))
 
 tbl_regression(
@@ -570,7 +569,10 @@ tbl_regression(
   as_gt()
 ```
 
-@fig-modelresultsmarginal investigates whether a respondent agrees with the women in politics question, based on their gender and political views. 
+@fig-modelresultsmarginal investigates whether a respondent agrees with the women in politics question, based on their gender and political views. A larger difference was expected by respondent gender, with the model estimating that when compared to men, women are just 2% less likely to believe that women are emotionally not suited for politics. When people with `Extremely Liberal` political views are compared to respondents with `Liberal` views, Liberals are 4% less likely to agree that women are emotionally suited for politics. Respondents with `Slightly Liberal` views, when compared to those with `Extremely Liberal` views, are 7% less likely to agree that women are emotionally suited for politics. The model emphasizes that the more Liberal a respondent's views are, the more likely they are to disagree with the premise that women are not emotionally suited for politics. Respondents who identified themselves as having `Moderate` political views are 12% less likely than those with `Extremely Liberal` views to believe that women are emotionally not suited for politics.
+Moreover, when compared to people with `Extremely Liberal` political views, respondents with `Slightly Conservative views` are 14% less likely to disagree that women are emotionally not suited for politics. When people with `Conservative` and `Extremely Conservative` views are compared to respondents with `Extremely Liberal` views, they are 21% and 29% respectively less likely to disagree with the premise that women are not emotionally suited for politics compared to men. 
+
+Although there are small quantitative differences between respondents with Liberal and Slightly Liberal views, when compared to respondents with  Extremely Liberal views, the differences between Extremely Conservative, Conservative, and Slightly Conservative views, all when compared to respondents with  Extremely Liberal views are more distinguishable. It is also interesting that people with `Moderate` views are more closely aligned with people with `Slightly Conservative` views over those with `Slightly Liberal` views. 
 
 ```{r}
 #| echo: false
@@ -586,7 +588,6 @@ slopes(gender_women_polviews, newdata = "median") |>
   )
 ```
 
-\newpage
 # Discussion
 Overall, the data reveals that despite gendered framing by the traditional media, the American public largely sees women as being emotionally fit to serve as elected officials (74.3% of respondents in @tbl-women_in_pol_summary believe women are emotionally fit). Support for women in politics by gender has risen and fallen over time, potentially responding to election candidates and important news stories of the times (see @fig-women_in_pol_year_gender). With nearly three quarters of respondents disagreeing with the premise that men are more emotionally fit than women for politics, it is important to consider other factors that may be holding us back from achieving gender equality.  
 
