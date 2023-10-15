@@ -78,6 +78,55 @@ class(analysis_data_4$gender) == "factor"
 class(analysis_data_4$political_views) == "factor"
 nrow(analysis_data_4) == 37005
 
+# Create another specific data set for analysis #
+women_in_pol <-
+  cleaned_women_in_politics |>
+  mutate(year, id, women_in_politics)
+
+pol_views <-
+  summarized_political_preferences |>
+  select(year,id, party_identification) 
+
+analysis_data_2 <- merge(women_in_pol, pol_views) 
+
+demographic_info <-
+  cleaned_respondent_info |>
+  select(year, id, gender)
+
+final_analysis_data_2 <- merge(analysis_data_2, demographic_info)
+
+# Create analysis data with party identification labeled and factored # 
+analysis_data_5 <-
+  final_analysis_data_2 |>
+  mutate(
+    women_in_politics = case_when(
+      women_in_politics == "Agree" ~ 1,
+      women_in_politics == "Disagree" ~ 2,
+    ),
+    women_in_politics = as_factor(women_in_politics),
+    gender = as_factor(gender),
+    party_identification = factor(
+    party_identification,
+    levels = c(
+      "Strong Democrat",
+      "Not Strong Democrat",
+      "Independent, Close to Democrat",
+      "Independent",
+      "Independent, Close to Republican",
+      "Not Strong Republican",
+      "Strong Republican",
+      "Other" 
+    )
+    )
+  ) |>
+  select(women_in_politics, gender, party_identification)
+
+# Test combined data set #
+class(analysis_data_5$women_in_politics) == "factor"
+class(analysis_data_5$gender) == "factor"
+class(analysis_data_5$party_identification) == "factor"
+nrow(analysis_data_5) == 37005
+      
 # OLD: Create analysis data with political views labelled numerically and factored # 
 analysis_data_3 <-
   final_analysis_data |>
@@ -111,7 +160,7 @@ class(analysis_data_3$gender) == "factor"
 class(analysis_data_3$political_views) == "factor"
 nrow(analysis_data_3) == 37005
 
-#### Model ####
+#### Model Pol Views ####
 gender_women_polviews <-
   stan_glm(
     women_in_politics ~ gender + political_views,
@@ -173,3 +222,25 @@ just_the_estimates <-
 just_the_estimates
 
 slopes(gender_women_polviews, newdata = "median")
+
+#### Model Party ID ####
+gender_women_partyid <-
+  stan_glm(
+    women_in_politics ~ gender + party_identification,
+    data = analysis_data_5,
+    family = binomial(link = "logit"),
+    prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
+    prior_intercept = 
+      normal(location = 0, scale = 2.5, autoscale = TRUE),
+    seed = 16
+  )
+gender_women_partyid
+
+# Save model #
+saveRDS(
+  gender_women_partyid, file = "Outputs/model/gender_women_partyid.rds"
+)
+
+# Interpretation #
+gender_women_partyid <-
+  readRDS(file = "Outputs/model/gender_women_partyid.rds")
