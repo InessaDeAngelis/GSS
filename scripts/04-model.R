@@ -244,3 +244,44 @@ saveRDS(
 # Interpretation #
 gender_women_partyid <-
   readRDS(file = "Outputs/model/gender_women_partyid.rds")
+
+modelsummary(
+  list(
+    "Support Women in Politics" = gender_women_partyid
+  ),
+  statistic = "mad"
+)
+
+# Predictions #
+gender_women_partyid_predictions <-
+  predictions(gender_women_partyid) |>
+  as_tibble()
+gender_women_partyid_predictions
+
+# Graph Predictions #
+gender_women_partyid_predictions |>
+  ggplot(aes(x = party_identification, y = estimate, color = women_in_politics)) +
+  geom_jitter(width = 0.2, height = 0.0, alpha = 0.3) +
+  labs(
+    x = "Party Identification",
+    y = "Estimated probability respondents support women in politics",
+    color = "Women in Politics"
+  ) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle=45, hjust = 1, size = 10)) + 
+  theme(legend.position = "bottom") +
+  theme(legend.text = element_text(size = 6)) +
+  theme(legend.title = element_text(size = 9)) 
+
+# Credibility Interval Graph #
+modelplot(gender_women_partyid, conf_level = 0.9) +
+  labs(x = "90 per cent credibility interval")
+
+# Estimates only #
+just_the_estimates <-
+  gender_women_partyid_predictions |>
+  select(estimate, women_in_politics, gender, party_identification) |>
+  unique()
+just_the_estimates
+
+slopes(gender_women_partyid, newdata = "median")
