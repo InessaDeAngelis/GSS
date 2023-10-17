@@ -7,8 +7,8 @@ This paper analyzes General Social Survey (GSS) data from 1974 through 2022 to u
 
 The repo is structured as the following:
 
--   `inputs` contains the literature and data sources used in this analysis including the raw the data.
+-   `inputs` contains the literature and data sources used in this analysis including the raw data.
 
--   `outputs` contains the files used to generate the paper, including the cleaned data sets, Quarto document, and bibliography file, as well as the PDF of the paper.
+-   `outputs` contains the files used to generate the paper, including the cleaned data sets, model, Quarto document, and bibliography file, as well as the PDF of the paper.
 
--   `scripts` contains the R scripts used to simulate, download, clean, and validate the data.
+-   `scripts` contains the R scripts used to simulate, download, clean, model, and validate the data.
