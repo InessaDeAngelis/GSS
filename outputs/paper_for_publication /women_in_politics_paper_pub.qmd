@@ -132,7 +132,7 @@ In the remainder of this paper, I commence with the [Perceptions of Women in Pol
 # Perceptions of Women in Politics
 Research analyzing public attitudes and biases toward women in politics in the United States and other democratic nations has many research precedents [@dolan; @StereotypingQs]. Women have traditionally been found to have more liberal political views and Democrat party identifications, with men having more conservative political views and Republican party identifications [@barnes]. Public opinion polling analyzed by @dolanhansen reveals that while the public is aware of barriers facing women running for office, whether it be limited childcare or party fundraising structures, there is limited interest in working to remove these barriers. Moreover, @dolanlynch go beyond the growing body of research into public perceptions and attitudes to understand voter behavior and decision making procedures when voters have the choice of women on the ballot. Their research reveals that there is a relationship, albeit not significant, between public attitudes towards women in politics and actually casting their ballot for female candidates [@dolanlynch].
 
-The availability of GSS data means it historically has been drawn upon for measuring public attitudes toward various social, economic, and political issues, including evaluating perceptions of women in politics. More recently, scholars have employed GSS data as a way to augment other national or specific research-creation survey data, often focusing on answers to demographic or economic questions. @welchsigelman used GSS data from the first three years the women in politics question was asked to determine which demographic factors were most predisposed to supporting women in politics, while @diekman reveal systematic bias and gender stereotypes lead to discrepancies when men were asked to reveal their more favorable positions on “female-stereotypical” policy positions. @jennings utilized GSS data to perform a longitudinal, cross-generational analysis of the “gender gap”, focusing on the dynamics of generational change and corresponding political views. However, no recent research has solely examined GSS data between the commencement of respondents being asked the women in the politics question in the 1970s and the most recent iteration of the survey in 2022. In particular, this paper fills existing gaps by solely employing GSS data to see how responses by gender, age, political views, and party identification vary over the span of nearly fifty years. 
+The historical and contemporary availability of GSS data means it is often drawn upon for measuring public attitudes toward various social, economic, and political issues, including evaluating perceptions of women in politics. Recently, scholars employ GSS data as a way to augment other national or specific research-creation survey data, often focusing on answers to demographic or economic questions. @welchsigelman used GSS data from the first three years the women in politics question was asked to determine which demographic factors were most predisposed to supporting women in politics, while @diekman reveal systematic bias and gender stereotypes lead to discrepancies when men were asked to reveal their more favorable positions on “female-stereotypical” policy positions. @jennings utilized GSS data to perform a longitudinal, cross-generational analysis of the “gender gap”, focusing on the dynamics of generational change and corresponding political views. However, no recent research has solely examined GSS data between the commencement of respondents being asked the women in the politics question in the 1970s and the most recent iteration of the survey in 2022. In particular, this paper fills existing gaps by solely employing GSS data to see how responses by gender, age, political views, and party identification vary over the span of nearly fifty years. 
 
 # Data and methods
 The data used in this paper was retrieved from the US General Social Survey (GSS) from NORC at the University of Chicago [@gss]. I retrieved both demographic data and data relating to the perceived emotional viability of women in politics, political party affiliation and identification, from 1974 to 2022.
@@ -175,18 +175,18 @@ Furthermore, during the data cleaning process I renamed the `partyid` column to 
 
 ## Data Descriptions 
 ### Respondent Demographics
-Between 1974 and 2022, there were 37,005 responses recorded for GSS surveys which specifically asked the women in politics, political views, and party identification questions. Of these respondents, 20,609 (55.7%) identified as female, with 16,346 (44.2%) identifying as male, and 50 (0.1%) opting not to share their **gender**.
+Between 1974 and 2022, 37,005 responses were recorded for GSS surveys which specifically asked the women in politics, political views, and party identification questions. Of these respondents, 20,609 (55.7%) identified as female, with 16,346 (44.2%) identifying as male, and 50 (0.1%) opting not to share their **gender**.
 
-The **age** of survey respondents ranged from 18 to 89, with the average respondent being 47 years old. Many respondents fell within the 25-43 age range, as visible in @fig-age_summary. 
+The **age** of survey respondents ranged from 18 to 89, with the average respondent being 47 years old.
 
 ```{r}
 #| message: false
 #| echo: false
 #| warning: false
 #| label: fig-age_summary
-#| fig-cap: Number of survey respondents by age group
+#| fig-cap: Respondent perceptions of whether they agree or disagree with the women in politics question by age and gender
 
-age_data |>
+finalized_data |>
   mutate("age" = case_when(
     age >= 18 & age <= 29 ~ "18-29",
     age >= 30 & age <= 39 ~ "30-39",
@@ -195,14 +195,18 @@ age_data |>
     age >= 65 & age <= 79 ~ "65-79",
     age >= 79 ~ "80-89"
   )) |>
- ggplot(mapping = aes(x = age, y = n)) +
-  geom_bar(stat = "identity") +
+  ggplot(mapping = aes(x = age, fill = gender)) +
+  geom_bar() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=90, size = 6)) + 
   labs(
-    title = "Number of Respondents by Age",
     x = "Age",
-    y = "Number of Respondents",
+    y = "Number of respondents",
+    fill = "Gender"
   ) +
-  theme_classic() +
+  facet_wrap(vars(women_in_politics)) +
+  guides(x = guide_axis(angle = 90)) +
+  theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Set1")
 
 ```
@@ -260,32 +264,6 @@ The number of respondents by **gender** who disagree with the women in politics 
 Perceptions of women in politics by **age** has also varied over time, as emphasized by @fig-women_in_pol_age. People between the ages of 25 and 45 disagree most frequently with the premise that men are emotionally better suited for politics, with people who identified as being 34 years old disagreeing most strongly. People between the ages of 20 and 25 and 45 and 65 also disagreed with the women in politics question at similar rates. 
 
 Moreover, @fig-women_in_pol_age shows that the number of people who agree with the women in politics question remains relatively the same by age. 
-
-```{r}
-#| message: false
-#| echo: false
-#| warning: false
-#| label: fig-women_in_pol_age
-#| fig-cap: Respondent perceptions of women in politics by age
-
-finalized_data |>
-  ggplot(mapping = aes(x = age, fill = women_in_politics)) +
-  geom_bar() +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 25)) +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 25)) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle=90, size = 6)) + 
-  labs(
-    x = "Age",
-    y = "Number of respondents",
-    fill = "Women in Politics"
-  ) +
-  facet_wrap(vars(women_in_politics)) +
-  guides(x = guide_axis(angle = 90)) +
-  theme(legend.position = "bottom") +
-  scale_fill_brewer(palette = "Set1")
-
-```
 
 ### Political Views
 Responses to the women in politics question varies by **political views**, with people who identify as having more liberal views disagreeing, people with more conservative views agreeing, and people with more moderate views falling in the middle of liberal- and conservative-minded people (see @fig-polviews_all). Liberal views refers to anyone who self-identified in GSS as having `slightly liberal`, `liberal`, or `extremely liberal` views. Conservative views accounts for anyone who self-identified as having `slightly conservative`, `conservative`, or `extremely conservative` views. 
