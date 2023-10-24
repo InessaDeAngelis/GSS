@@ -123,7 +123,7 @@ age_data =
 # Introduction 
 Despite changing norms and perceptions, women are largely still missing from elected office in the United States (U.S.) and across the world. In 2023, the U.S. elected a historic number of  women to the House of Representatives with 125 (or 28.7%) and 25 to the Senate (or 25%) [@rutgers]. The current Vice President, Kamala Harris, is the first woman to hold this office. Although the number of women elected to the highest levels of government in the U.S. is inching toward gender-parity, progress is slow and hard fought. Women's credibility and perceived power as politicians is impacted by gendered framing by traditional media, priming members of the public to hold biased views about their qualifications [@deGeus]. Framing refers to how information is chosen, interpreted, and presented by the media, influencing the audience’s perception of it as important and shaping their own decision making procedures [@bashevkin]. Previous research has shown that the American public is open to voting for a female president and that gender stereotypes perpetuated by the media are playing less of a role in the construction of public image and voting behaviors [@StereotypingQs]. However, gender stereotypes continue to influence public perceptions of women in politics. 
 
-To gain a further understanding of the impact of gender stereotypes and the perceived emotional viability of women to serve in politics, I track responses by political views and party identification, using data obtained from the U.S. General Statistical Survey (GSS) from NORC [@gss] at the University of Chicago. These perceptions of women in politics are then analyzed and modeled to understand their correlations with demographic factors such as gender and age, as well as tracking the perceptions over time. 
+To gain a further understanding of the impact of gender stereotypes and the perceived emotional viability of women to serve in politics, I track responses by political views and party identification, using data obtained from the U.S. General Statistical Survey (GSS) from NORC [@gss] at the University of Chicago. These perceptions of women in politics are then analyzed and modeled to understand their correlations with demographic factors such as gender and age, as well as tracking the perceptions over time. It is hypothesized that respondents with more liberal political views and Democrat party identifications will disagree that men are emotionally better suited for politics than women and that respondents with more conservative political views and Republican party identifications will agree that men are emotionally better suited for politics than women. 
 
 My analysis emphasizes that perceptions of women in politics have generally improved over time since the early 1970s, with a small dip in the late 1990s, 2006, and 2016. People who self-identify as Democrats or as having liberal political views in most cases disagree with the premise that men are emotionally better suited for politics then women, while people who self-identify as Republicans or as having conservative political views in some cases agree with the premise. The number of people with conservative views who agree that men are emotionally better suited for politics is not as high as anticipated, while people with Other party identifications and moderate political views hold unexpected views about women in politics. My findings generally reinforce our understanding of the political divide on questions about the role of women in politics. 
 	
@@ -135,17 +135,15 @@ Research analyzing public attitudes and biases toward women in politics in the U
 The availability of GSS data means it historically has been drawn upon for measuring public attitudes toward various social, economic, and political issues, including evaluating perceptions of women in politics. More recently, scholars have employed GSS data as a way to augment other national or specific research-creation survey data, often focusing on answers to demographic or economic questions. @welchsigelman used GSS data from the first three years the women in politics question was asked to determine which demographic factors were most predisposed to supporting women in politics, while @diekman reveal systematic bias and gender stereotypes lead to discrepancies when men were asked to reveal their more favorable positions on “female-stereotypical” policy positions. @jennings utilized GSS data to perform a longitudinal, cross-generational analysis of the “gender gap”, focusing on the dynamics of generational change and corresponding political views. However, no recent research has solely examined GSS data between the commencement of respondents being asked the women in the politics question in the 1970s and the most recent iteration of the survey in 2022. In particular, this paper fills existing gaps by solely employing GSS data to see how responses by gender, age, political views, and party identification vary over the span of nearly fifty years. 
 
 # Data and methods
-The data used in this paper was retrieved from the US General Social Survey (GSS) from NORC at the University of Chicago [@gss]. I obtained both demographic data and data relating to the perceived emotional viability of women in politics, political party affiliation and identification, from 1974 to 2022.
+The data used in this paper was retrieved from the US General Social Survey (GSS) from NORC at the University of Chicago [@gss]. I retrieved both demographic data and data relating to the perceived emotional viability of women in politics, political party affiliation and identification, from 1974 to 2022.
 
-## Source Data
 For demographic data, I obtained responses for the variables `age` and `sex` which provide insight into respondents' age and gender. I then obtained data relating to the emotional viability of women in serve in politics, encompassed in the variables `fepol`, `fepolv`, and `fepolnv`. The survey question for all three variables asks *"Tell me if you agree or disagree with this statement: Most men are better suited emotionally for politics than are most women"* [@gssCodebook]. Going forward, I will refer to this as the "women in politics question".
 
 I additionally retrieved data for the variables `polviews` (political views) and `partyid` (party identification). The political views survey question asks *"We hear a lot of talk these days about liberals and conservatives. I'm going to show you a seven-point scale on which the political views that people might hold are arranged from extremely liberal--point 1--to extremely conservative--point 7. Where would you place yourself on this scale?"* [@gssCodebook]. The party identification survey question asks *"Generally speaking, do you usually think of yourself as a Republican, Democrat, Independent, or what?"* [@gssCodebook].
 
-## Data Limitations
+## Survey Methodology and Data Limitations
 Since 1972, GSS has administered in-person interviews to track public opinion. Due to the Covid-19 pandemic, data from the year 2020 was not recorded and instead spans the years of 2020 and 2021. This data was collected using new and updated methodologies, which changed which people were selected and how they completed the GSS questionnaire. 
 
-### Survey Methodology 
 The 2022 GSS bridges the methodology from both the traditional face-to-face data collection processes utilized between 1972 and 2018 and the web-based collection method introduced during the Covid-19 pandemic in 2021, using a mixed mode that includes face-to-face, web, and telephone surveys. Throughout 2022, the GSS conducted an experiment where the sample was divided into two parts. The first part encompassed people doing the face-to-face survey, while the second part included people doing the web and telephone survey. The content of the two parts of the data was not intended to be compared, instead comparing the two modes of collecting data. The sample divided in two for the purpose of comparing methodologies is visible in the `fepolv` and `fepolnv` variables selected for this paper. In 2021 and 2022, the GSS survey updated the variable name from `fepol` to `fepolv` and `fepolnv`, although the phrasing of the question remained the same. Despite these changes in methodology, GSS [@gssCodebook] intends for the 2022 survey to be comparable to the 2018 GSS. Although the majority of the data utilized for this study was obtained prior to the Covid-19 pandemic, the 2021 and 2022 responses may be impacted by the changes in methodology
 
 Previous iterations of GSS selected respondents by quota (1972-1976), Kish grid with age ordering (1975-2018), and last birthday (2021). The 2022 GSS shifts to a Kish grid without age ordering, where adults in the household are selected by their order in the household, not age [@gssCodebook]. These changes to the selection of respondents, especially considering technological literacy among older populations may impact the survey results from 2021 and 2022. 
@@ -158,12 +156,12 @@ Data was collected, cleaned, and analyzed using the statistical programming soft
 
 After downloading and selecting the variables of interest from GSS [@gss], I performed data cleaning based on the variable definitions outlined in the GSS codebook [@gssCodebook]. I removed the years in which the questions asking whether men are emotionally better suited for politics than women, political views, and party identification were not asked (the raw data set would display answers for those years as NA). I updated the respondent demographic information data set to reflect the years omitted, given that these demographic questions are asked annually. 
 
-The political views and party identification questions were asked slightly more frequently between 1974 and 1994, including in some years that the women in politics question was not. The responses from 1976, 1980, 1984, and 1987 were removed to ensure consistency between the two data sets. Similar to the women in politics question, the party affiliation and political views were asked bi-annually starting in 1994, except in 2020 due to Covid-19. 
+The political views and party identification questions were asked slightly more frequently between 1974 and 1994, including in some years that the women in politics question was not. The responses from 1976, 1980, 1984, and 1987 were removed to ensure consistency between the two data sets. Similar to the women in politics question, the party identification and political views were asked bi-annually starting in 1994, except in 2020 due to Covid-19. 
 
 ### Respondent Demographic Information
 During face-to-face interviews, interviewers traditionally coded the `sex` variable based on their observations. However, it was not possible to make this determination with telephone and web administered surveys, so respondents were asked their sex recorded at birth and their current gender identity. GSS then re-coded these responses into one variable: `sex`. 
 
-During the data cleaning process, I renamed the `sex` column to `gender`, with the value 1 updated to "Male", and the value 2 updated to "Female" based on the GSS codebook [@gssCodebook]. There were no changes in how respondents were asked to provide their age.
+During the data cleaning process, I renamed the `sex` column to `gender`, with value 1 updated to "Male", and value 2 updated to "Female" based on the GSS codebook [@gssCodebook]. There were no changes in how respondents were asked to provide their age.
 
 ### Perceptions of Women in Politics
 Between 1974 and 2018, the variable for the women in politics question was `fepol`. However, with the implementation of the online only survey in 2021 and the mixed-methodology survey in 2022, `fepolv` and `fepolnv` were introduced to replace `fepol`. Consequently, employing the `rbind()` function which combines groups of rows together, I merged together the `fepol`, `fepolv`, and `fepolnv` responses into one new variable labelled `women_in_politics`. During the data cleaning process, I update value 1 to "Agree", and value 2 to "Disagree" based on the GSS codebook [@gssCodebook]
@@ -177,39 +175,28 @@ Furthermore, during the data cleaning process I renamed the `partyid` column to 
 
 ## Data Descriptions 
 ### Respondent Demographics
-Between 1974 and 2022, there were 37,005 responses recorded for GSS surveys which specifically asked the women in politics, political views, and party identification questions. Of these respondents, 20,609 (55.7%) identified as female, with 16,346 (44.2%) identifying as male, and 50 (0.1%) opting not to share their **gender** (see @tbl-gender_summary).
+Between 1974 and 2022, there were 37,005 responses recorded for GSS surveys which specifically asked the women in politics, political views, and party identification questions. Of these respondents, 20,609 (55.7%) identified as female, with 16,346 (44.2%) identifying as male, and 50 (0.1%) opting not to share their **gender**.
 
-```{r}
-#| message: false
-#| echo: false
-#| warning: false
-#| label: tbl-gender_summary
-#| tbl-cap: Number of respondents by gender, from 1974-2022
+The **age** of survey respondents ranged from 18 to 89, with the average respondent being 47 years old. Many respondents fell within the 25-43 age range, as visible in @fig-age_summary. 
 
-finalized_data |>
-  group_by(gender) |>
-  count() |>
-  ungroup() |>
-  mutate (pct = percent(n / sum(n), digit = 1)) |>
-  kable(
-    col.names = c("Gender", "Number of Responses", "Percentage"),
-    booktabs = TRUE
-  )
-```
-
-The **age** of survey respondents ranged from 18 to 89, with the average respondent being 47 years old. Many respondents fell within the 25-43 age range, as visible in @fig-age_summary. @fig-age_summary suggests that the number of teenagers (18 and 19 year olds) who responded to the survey was on the lower end, but quickly rose as respondents entered their 20s and moved toward the age of 25. The number of respondents by age tapered off the older they indicated they were, starting around age 50. 
 ```{r}
 #| message: false
 #| echo: false
 #| warning: false
 #| label: fig-age_summary
-#| fig-cap: Number of survey respondents by age
+#| fig-cap: Number of survey respondents by age group
 
 age_data |>
+  mutate("age" = case_when(
+    age >= 18 & age <= 29 ~ "18-29",
+    age >= 30 & age <= 39 ~ "30-39",
+    age >= 40 & age <= 49 ~ "40-49",
+    age >= 50 & age <= 64 ~ "50-64",
+    age >= 65 & age <= 79 ~ "65-79",
+    age >= 79 ~ "80-89"
+  )) |>
  ggplot(mapping = aes(x = age, y = n)) +
   geom_bar(stat = "identity") +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 25)) +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 25)) +
   labs(
     title = "Number of Respondents by Age",
     x = "Age",
@@ -302,6 +289,7 @@ finalized_data |>
 
 ### Political Views
 Responses to the women in politics question varies by **political views**, with people who identify as having more liberal views disagreeing, people with more conservative views agreeing, and people with more moderate views falling in the middle of liberal- and conservative-minded people (see @fig-polviews_all). Liberal views refers to anyone who self-identified in GSS as having `slightly liberal`, `liberal`, or `extremely liberal` views. Conservative views accounts for anyone who self-identified as having `slightly conservative`, `conservative`, or `extremely conservative` views. 
+
 ```{r}
 #| message: false
 #| echo: false
