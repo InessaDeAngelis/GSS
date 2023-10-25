@@ -385,7 +385,7 @@ tbl_regression(
   as_gt()
 ```
 
-@fig-modelresults_partyid investigates whether a respondent supports women in politics, on the basis of their gender and party identification. When compared to female respondents, male respondents are 10% less likely to disagree with the premise that men are emotionally better suited for politics than women. When respondents who identified as having **Strong Democrat** party identifications are compared to those with **Not Strong Democrat** and **Independent, Close to Democrat** views, **Not Strong Democrats** are 8% less likely to support women in politics and **Independent, Close to Democrats** are 31% more likely to support women in politics. **Independents** when compared to **Strong Democrats** are 17% more likely disagree that women are emotionally not suited for politics. Furthermore, when respondents who identified as having **Strong Democrat** party identifications are compared to those with **Independent, Close to Republican**, **Not Strong Republican**, and **Strong Republican** views, **Independent, Close to Republicans** are 13% less likely, **Not Strong Republicans** are 39% less likely, and **Strong Republicans** are 63% less likely disagree that women are emotionally not suited for politics. People who identified their party affiliation as being **Other** are an estimated 35% more likely to support women in politics, then compared to people who are **Strong Democrats**. The predictions for Democrats and Republicans close to being Independent, Independents, and Others are particularly interesting as they reveal nuanced beliefs about the role of women in politics, unlike the other respondents who firmly fall along partisan lines. 
+@fig-modelresults_partyid investigates whether a respondent supports women in politics, on the basis of their gender and party identification. When compared to female respondents, male respondents are 10% less likely to disagree with the premise that men are emotionally better suited for politics than women. When respondents who identified as having **Strong Democrat** party identifications are compared to those with **Not Strong Democrat** and **Independent, Close to Democrat** views, **Not Strong Democrats** are 8% less likely to support women in politics and **Independent, Close to Democrats** are 31% more likely to support women in politics. **Independents** when compared to **Strong Democrats** are 17% more likely disagree that women are emotionally not suited for politics. Furthermore, when respondents who identified as having **Strong Democrat** party identifications are compared to those with **Independent, Close to Republican**, **Not Strong Republican**, and **Strong Republican** views, **Independent, Close to Republicans** are 13% less likely, **Not Strong Republicans** are 39% less likely, and **Strong Republicans** are 63% less likely to disagree that women are emotionally not suited for politics. People who identified their party affiliation as being **Other** are an estimated 35% more likely to support women in politics, then compared to people who are **Strong Democrats**. The predictions for Democrats and Republicans close to being Independent, Independents, and Others are particularly interesting as they reveal nuanced beliefs about the role of women in politics, unlike the other respondents who firmly fall along partisan lines. 
 
 ```{r}
 #| echo: false
@@ -404,7 +404,7 @@ slopes(gender_women_partyid, newdata = "median") |>
 @fig-modelresultsmarginal2 highlights that despite significant partisan differences in views about women in politics, the quantitative differences may not be as stark as anticipated [@barnes]. When compared to female respondents, male respondents are 2% less likely to disagree with the premise that women are emotionally not suited for politics. **Strong Democrats** when compared to **Not Strong Democrats** are 1% less likely to agree with the women in politics questions, while those who identified as **Independent, Close to Democrat** are 5% more likely to disagree. Respondents with **Independent** views, when compared to **Strong Democrats** are an estimated 3% more likely to disagree with the women in politics question. Furthermore, all when compared to the views of **Strong Democrats**, **Independent, Close to Republicans** are 2% less likely, **Not Strong Republican** are 8%, and **Strong Republicans** are 13% less likely to disagree with the women in politics survey question. Lastly, respondents who identified themselves as **Other** are an estimated 8% more likely to disagree that women are emotionally not suited for politics, compared to **Strong Democrats**. The results in @fig-modelresultsmarginal2 emphasize that despite partisan divides and views, perceptions of the emotional viability of women in serve in politics across the board are better than anticipated. 
 
 # Discussion
-Overall, the data reveals that despite gendered framing by the traditional media, the American public largely sees women as being emotionally fit to serve as elected officials (74.3% of respondents believe women are emotionally fit). Support for women in politics by gender has risen and fallen over time, potentially responding to election candidates, socio-cultural phenomenons, and important news stories of the times (see @fig-women_in_pol_year_gender). With nearly three quarters of respondents disagreeing with the premise that men are more emotionally fit than women for politics, it is important to consider other factors that may be holding us back from achieving gender equality.  
+Overall, the data reveals that despite gendered framing by the traditional media, the public largely sees women as being emotionally fit to serve as elected officials (74.3% of respondents believe women are emotionally fit). Support for women in politics by gender has risen and fallen over time, potentially responding to election candidates, socio-cultural phenomenons, and important news stories of the times (see @fig-women_in_pol_year_gender). With nearly three quarters of respondents disagreeing with the premise that men are more emotionally fit than women for politics, it is important to consider other factors that may be holding us back from achieving gender equality.  
 
 ## Perceptions of Women in Politics by Demographic Factors  
 As hypothesized, women disagree with the question of whether men are emotionally suited for politics than them at a high rate. It is noteworthy that women also agree with the question at a slightly higher rate than men (13.8% versus 11.8%). Respondents between the ages of 25 and 45 were identified as being the most supportive of women in politics, which aligns with what is known about the political views and party identifications of people of those ages (see @fig-age_summary).
@@ -421,11 +421,40 @@ While there is often significant disagreement between liberals, conservatives, a
 
 ```{r}
 #| message: false
+#| eval: true
 #| echo: false
 #| label: fig-moderate_liberal
-#| fig-cap: Comparing Moderate and Liberal Perceptions of Women in Politics
+#| fig-cap: Comparing Moderate and Liberal and Moderate and Conservative perceptions of women in politics
+#| layout-ncol: 2
 
-moderate_liberal_data |>
+# Code for having two columns referenced from: https://github.com/RohanAlexander/telling_stories/blob/main/05-static_communication.qmd 
+
+#Panel A
+finalized_data |>
+  select(year, id, gender, political_views, women_in_politics) |>
+  filter(political_views == "Moderate" | political_views == "Liberal" | political_views == "Slightly Liberal" | political_views == "Extremely Liberal") |>
+   mutate(political_views = fct_relevel(political_views, "Extremely Liberal", "Liberal", "Slightly Liberal", "Moderate")) |>
+  ggplot(mapping = aes(x = year, fill = political_views)) +
+  geom_bar() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=90, size = 5)) + 
+  labs(
+    x = "Year",
+    y = "Women in Politics",
+    fill = "Political Views"
+  ) +
+  facet_wrap(vars(women_in_politics), scales = "free") +
+  guides(x = guide_axis(angle = 90)) +
+  theme(legend.text = element_text(size = 6)) +
+  theme(legend.title = element_text(size = 9)) +
+  theme(legend.position = "bottom") +
+  scale_fill_brewer(palette = "Set1")
+
+#Panel B
+finalized_data |>
+ select(year, id, gender, political_views, women_in_politics) |>
+  filter(political_views == "Moderate" | political_views == "Conservative" | political_views == "Slightly Conservative" | political_views == "Extremely Conservative") |>
+   mutate(political_views = fct_relevel(political_views, "Extremely Conservative", "Conservative", "Slightly Conservative", "Moderate")) |>
   ggplot(mapping = aes(x = year, fill = political_views)) +
   geom_bar() +
   theme_minimal() +
@@ -451,6 +480,7 @@ moderate_liberal_data |>
 #| fig-cap: Comparing Moderate and Conservative Perceptions of Women in Politics
 
 moderate_conservative_data |>
+   mutate(political_views = fct_relevel(political_views, "Extremely Conservative", "Conservative", "Slightly Conservative", "Moderate")) |>
   ggplot(mapping = aes(x = year, fill = political_views)) +
   geom_bar() +
   theme_minimal() +
@@ -470,7 +500,7 @@ moderate_conservative_data |>
 ```
 
 ## Perceptions of Women in Politics by Party Identification 
-Despite assumptions and previous research, this GSS data illustrates that perceptions of the emotional viability of women to serve in politics matches political party stances (Democrat and Republican) on the matter, but the results are not as negative and that public is more supportive of women running for elected office then anticipated. The support of women in politics falls along party lines and is more positive than the ratios of women elected to the House of Representatives and the Senate from each party. Currently, there are 92 Democrat women (21%) and 33 Republican women (8%) elected to the House of Representatives (which has 435 members in total) [@rutgers]. There are 15 Democrat women (15%), 9 Republican women (9%), and 1 Independent woman (1%) elected to the Senate (which has 100 members in total) [@rutgers]. 
+Despite assumptions and previous research, the data illustrates that perceptions of the emotional viability of women to serve in politics matches political party stances (Democrat and Republican) on the matter, but the results are not as negative and that public is more supportive of women running for elected office then anticipated. The support of women in politics falls along party lines and is more positive than the ratios of women elected to the House of Representatives and the Senate from each party. Currently, there are 92 Democrat women (21%) and 33 Republican women (8%) elected to the House of Representatives (which has 435 members in total) [@rutgers]. There are 15 Democrat women (15%), 9 Republican women (9%), and 1 Independent woman (1%) elected to the Senate (which has 100 members in total) [@rutgers]. 
 
 The results from @fig-modelresultsmarginal2, highlighting how `Others` are an estimated 8% more likely to disagree with the women in politics question than `Strong Democrats` leaves room for questions about the nature of respondents selecting this option. Referencing previous research, one can assume that those who selected `Other` may have political views further to the left of the Democrats on the political spectrum, but without an opportunity for respondents to provide a short written response or interview, this option will remain ambiguous and a further area of study [@dolanbook].  
 
@@ -479,12 +509,12 @@ Asking people about their political views and potential party affiliation remain
 
 Politics and political views are much more nuanced then simply selecting "agree" or "disagree" on a survey, so without an opportunity for people to explain their views through an open-ended text box, important information which helps contextualize why they do or do not believe women are emotionally viable to serve in elected office is missed. 
 
-Despite the changing variable names to account for newer survey methods, the question asking whether men are emotionally better suited for politics than women hearkens back to the 1970s, despite the strides being made toward gender equality in American politics.  The phrasing of the question asking whether men are better emotionally suited is a leading question which is biased and primes the respondent to think about women in a specific way. Women are framed by traditional media and those on social media as being emotional, high strung, and not possessing “manly” leadership skills, so asking whether men are more emotionally suited over women reinforces traditional media framing and stereotypes [@fallfromgrace; @bashevkin]. The media never asks men about their emotions or covers their behavior in the public eye through the lens of being emotional and the same should be expected for the media coverage of women in politics.  GSS should consider asking respondents in future iterations of the survey about leadership qualities, relevant experience, and ability to address crucial policy issues. The phrasing of the women in politics survey question does not account for current progress made toward gender equality, nor today's hybrid media environment and the role that social media plays in disseminating political rhetoric and shaping the image of political candidates [@vanderpas2020]. It is challenging to know the extent that these factors impact GSS' data and should be accounted for in upcoming iterations of the survey. 
+Despite the changing variable names to account for newer survey methods, the question asking whether men are emotionally better suited for politics than women hearkens back to the 1970s, despite the strides being made toward gender equality in politics. The phrasing of the question asking whether men are better emotionally suited is a leading question which is biased and primes the respondent to think about women in a specific way. Women are framed by traditional media and those on social media as being emotional, high strung, and not possessing “manly” leadership skills, so asking whether men are more emotionally suited over women reinforces traditional media framing and stereotypes [@fallfromgrace; @bashevkin]. The media never asks men about their emotions or covers their behavior in the public eye through the lens of being emotional and the same should be expected for the media coverage of women in politics.  GSS should consider asking respondents in future iterations of the survey about leadership qualities, relevant experience, and ability to address crucial policy issues. The phrasing of the women in politics survey question does not account for current progress made toward gender equality, nor today's hybrid media environment and the role that social media plays in disseminating political rhetoric and shaping the image of political candidates [@vanderpas2020]. It is challenging to know the extent that these factors impact GSS' data and should be accounted for in upcoming iterations of the survey. 
 
 Finally, GSS' changing sampling methodology over time may have lead to the imbalance of respondents by **gender**. This imbalance means that people who self-identify as female are represented at a slightly higher rate than people who self-identify as male, meaning readers should be aware when drawing conclusions about gendered perceptions of women in politics. Furthermore, other changes in methodology due to the Covid-19 pandemic may have impacted more recent responses, especially since access to reliable internet, cell phone service, and technological literacy are not a given among all people.
 
 # Conclusion
-Utilizing data from the U.S. General Social Survey, this paper analyzed perceptions of the emotional viability of women to serve in politics by political views and party identification over time from 1974 to 2022, in correlation with demographic factors such as gender and age. My results reveal that despite gendered media framing, the American public is generally supportive of women seeking elected office. People self-identifying as Democrats and people with liberal and liberal-learning political views are more supportive of women in politics. However, the number of people who self-identify as Republicans and people with conservative and conservative-learning political views were more supportive of women in politics than anticipated. People who self-identified as having Moderate views hold "middle of the road" beliefs in response to the women in politics question, falling approximately between those with self-identified liberal and self-identified conservative views. The study of moderates and those who are not Democrats or Republicans (labelled as "Others") should be further analyzed. 
+Utilizing data from the U.S. General Social Survey, this paper analyzed perceptions of the emotional viability of women to serve in politics by political views and party identification over time from 1974 to 2022, in correlation with demographic factors such as gender and age. My results reveal that despite gendered media framing, the public is generally supportive of women seeking elected office. People self-identifying as Democrats and people with liberal and liberal-learning political views are more supportive of women in politics. However, the number of people who self-identify as Republicans and people with conservative and conservative-learning political views were more supportive of women in politics than anticipated. People who self-identified as having Moderate views hold "middle of the road" beliefs in response to the women in politics question, falling approximately between those with self-identified liberal and self-identified conservative views. The study of moderates and those who are not Democrats or Republicans (labelled as "Others") should be further analyzed. 
 
 There are many socio-economic, cultural, and demographic factors beyond an individual's age and gender that inform voting behaviors and perceptions of what constitutes a good political candidate. Consequently, future research should look at the intersection of race and identity, income, and highest level of education attained with these questions about political views, party identification, and the emotional viability of women to run for office. 
 
