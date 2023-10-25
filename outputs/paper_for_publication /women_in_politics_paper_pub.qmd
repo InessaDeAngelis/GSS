@@ -425,11 +425,10 @@ While there is often significant disagreement between liberals, conservatives, a
 #| echo: false
 #| label: fig-moderate_comp
 #| fig-cap: Comparing Moderate and Liberal and Moderate and Conservative perceptions of women in politics
-#| layout-ncol: 1
+#| fig-subcap: ["Liberals & Moderates", "Conservatives & Moderates", "Including standard errors"]
 
-# Code for having two columns referenced from: https://github.com/RohanAlexander/telling_stories/blob/main/05-static_communication.qmd 
-
-#Panel A
+# Code for sub-cap referenced from: https://github.com/RohanAlexander/telling_stories/blob/main/05-static_communication.qmd
+# Panel (a)
 finalized_data |>
   select(year, id, gender, political_views, women_in_politics) |>
   filter(political_views == "Moderate" | political_views == "Liberal" | political_views == "Slightly Liberal" | political_views == "Extremely Liberal") |>
@@ -450,7 +449,7 @@ finalized_data |>
   theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Set1")
 
-#Panel B
+# Panel (b)
 finalized_data |>
  select(year, id, gender, political_views, women_in_politics) |>
   filter(political_views == "Moderate" | political_views == "Conservative" | political_views == "Slightly Conservative" | political_views == "Extremely Conservative") |>
@@ -483,10 +482,11 @@ The results from @fig-modelresultsmarginal2, highlighting how `Others` are an es
 #| eval: true
 #| echo: false
 #| label: fig-other_comp
-#| fig-cap: Comparing Other and Democrat and Other and Republican perceptions of women in politics
-#| layout-ncol: 2
+#| fig-cap: Comparing Democrat and Other party identifications and Republican  and Other party identifications perceptions of women in politics
+#| fig-subcap: ["Democrats & Other", "Republicans & Other", "Including standard errors"]
 
-#Panel A
+# Code for sub-cap referenced from: https://github.com/RohanAlexander/telling_stories/blob/main/05-static_communication.qmd
+# Panel (a)
 finalized_data |>
   select(year, id, gender, party_identification, women_in_politics) |>
   filter(party_identification == "Strong Democrat" | party_identification == "Not Strong Democrat" | party_identification == "Independent, Close to Democrat" | party_identification == "Other") |>
@@ -507,7 +507,7 @@ finalized_data |>
   theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Set1")
 
-#Panel B
+# Panel (b)
 finalized_data |>
  select(year, id, gender, party_identification, women_in_politics) |>
   filter(party_identification == "Strong Republican" | party_identification == "Not Strong Republican" | party_identification == "Independent, Close to Republican" | party_identification == "Other") |>
