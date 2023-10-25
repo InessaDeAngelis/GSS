@@ -426,6 +426,7 @@ While there is often significant disagreement between liberals, conservatives, a
 #| label: fig-moderate_comp
 #| fig-cap: Comparing Moderate and Liberal and Moderate and Conservative perceptions of women in politics
 #| fig-subcap: ["Liberals & Moderates", "Conservatives & Moderates", "Including standard errors"]
+#| layout-ncol: 1
 
 # Code for sub-cap referenced from: https://github.com/RohanAlexander/telling_stories/blob/main/05-static_communication.qmd
 # Panel (a)
@@ -469,7 +470,6 @@ finalized_data |>
   theme(legend.title = element_text(size = 9)) +
   theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Set1")
-
 ```
 
 ## Perceptions of Women in Politics by Party Identification 
@@ -484,6 +484,7 @@ The results from @fig-modelresultsmarginal2, highlighting how `Others` are an es
 #| label: fig-other_comp
 #| fig-cap: Comparing Democrat and Other party identifications and Republican  and Other party identifications perceptions of women in politics
 #| fig-subcap: ["Democrats & Other", "Republicans & Other", "Including standard errors"]
+#| layout-ncol: 1
 
 # Code for sub-cap referenced from: https://github.com/RohanAlexander/telling_stories/blob/main/05-static_communication.qmd
 # Panel (a)
