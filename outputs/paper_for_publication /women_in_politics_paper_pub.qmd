@@ -318,7 +318,7 @@ y_i|\pi_i & \sim \mbox{Bern}(\pi_i) \\
 \end{aligned}
 $$ {#eq-gender_women_polviews}
 
-Where $y_i$ is the respondent's views on women in politics and equal to 1 if they agree that men are emotionally better suited and 2 if they disagree, $\mbox{gender}_i$ is the gender of the respondent and $\mbox{political views}_i$ is the political views of the respondent.
+Where $y_i$ is the respondent's views on women in politics and equal to 0 if they agree that men are emotionally better suited and 1 if they disagree, $\mbox{gender}_i$ is the gender of the respondent and $\mbox{political views}_i$ is the political views of the respondent.
 
 ```{r}
 #| echo: false
@@ -368,7 +368,7 @@ y_i|\pi_i & \sim \mbox{Bern}(\pi_i) \\
 \end{aligned}
 $$ {#eq-gender_women_partyid}
 
-Where $y_i$ is the respondent's views on women in politics and equal to 1 if they agree that men are emotionally better suited and 2 if they disagree, $\mbox{gender}_i$ is the gender of the respondent and $\mbox{party identification}_i$ is the political views of the respondent.
+Where $y_i$ is the respondent's views on women in politics and equal to 0 if they agree that men are emotionally better suited and 1 if they disagree, $\mbox{gender}_i$ is the gender of the respondent and $\mbox{party identification}_i$ is the political views of the respondent.
 
 ```{r}
 #| echo: false

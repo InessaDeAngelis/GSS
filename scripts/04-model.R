@@ -52,8 +52,8 @@ analysis_data_4 <-
   final_analysis_data |>
   mutate(
     women_in_politics = case_when(
-      women_in_politics == "Agree" ~ 1,
-      women_in_politics == "Disagree" ~ 2,
+      women_in_politics == "Agree" ~ 0,
+      women_in_politics == "Disagree" ~ 1,
     ),
     women_in_politics = as_factor(women_in_politics),
     gender = as_factor(gender),
@@ -100,8 +100,8 @@ analysis_data_5 <-
   final_analysis_data_2 |>
   mutate(
     women_in_politics = case_when(
-      women_in_politics == "Agree" ~ 1,
-      women_in_politics == "Disagree" ~ 2,
+      women_in_politics == "Agree" ~ 0,
+      women_in_politics == "Disagree" ~ 1,
     ),
     women_in_politics = as_factor(women_in_politics),
     gender = as_factor(gender),
@@ -132,8 +132,8 @@ analysis_data_3 <-
   final_analysis_data |>
   mutate(
     women_in_politics = case_when(
-      women_in_politics == "Agree" ~ 1,
-      women_in_politics == "Disagree" ~ 2,
+      women_in_politics == "Agree" ~ 0,
+      women_in_politics == "Disagree" ~ 1,
     ),
     women_in_politics = as_factor(women_in_politics),
     gender = case_when(
