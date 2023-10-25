@@ -413,7 +413,7 @@ As hypothesized, women disagree with the question of whether men are emotionally
 The number of people with **liberal** views who disagree with the question that men are emotionally better suited for politics then women is comparable to the hypothesized number, while the people with **conservative** views who agree is not as high as anticipated, but still aligns with my hypothesis. My hypothesis did not account for people with **moderate** views as the way people with moderate views feel about specific policy issues and survey questions is not consistent nor aligns with a single political party. However, in the case of the women in politics survey question, the people who identified as moderate aligned in the middle of people with liberal and conservative views, but leaned a little closer to those with `Slightly Conversative` political views (see @fig-modelresultsmarginal). 
 
 ### Perceptions of Women in Politics - Moderates versus Liberals and Conservatives 
-Defining a "moderate" voter in American politics proves challenging and is a weakness of this survey (further discussed in [Limitations]). Scholars view moderates as not simply holding "middle of the road views", rather sharing views with either liberals or conservatives on occasion if the social, economic, or political context aligns with their beliefs [@moderates]. Data from GSS reveals that people with moderate views fall in between people with liberal views and people with conservative views when both agreeing and disagreeing with the women in politics question. People with moderate views and people with liberal views hold somewhat similar views to the women in politics question (74.7% versus 81.4%). When broken down by gender, 47.2% of liberal-identifying women disagree with the women in politics question, while 43.9% of moderate-identifying women disagree. 34.2% of liberal-identifying men disagree, while 30.7% of moderate-identifying men disagree. Moreover, 9.2% of liberal-identifying women agree, while 14.9% of moderate-identifying women agree with the premise that men are emotionally better suited for politics. 9.3% of liberal-identifying men agree, while 10.4% of moderate-identifying men agree. In these circumstances, when analyzed by gender, the gap between people with liberal and moderate views closes slightly. 
+Defining a "moderate" voter in American politics proves challenging and is a weakness of this survey (further discussed in [Limitations]). Scholars view moderates as not simply holding "middle of the road views", rather sharing views with either liberals or conservatives on occasion if the social, economic, or political context aligns with their beliefs [@moderates]. Data from GSS reveals that people with moderate views fall in between people with liberal views and people with conservative views when both agreeing and disagreeing with the women in politics question (see @fig-moderate_comp). People with moderate views and people with liberal views hold somewhat similar views to the women in politics question (74.7% versus 81.4%). When broken down by gender, 47.2% of liberal-identifying women disagree with the women in politics question, while 43.9% of moderate-identifying women disagree. 34.2% of liberal-identifying men disagree, while 30.7% of moderate-identifying men disagree. Moreover, 9.2% of liberal-identifying women agree, while 14.9% of moderate-identifying women agree with the premise that men are emotionally better suited for politics. 9.3% of liberal-identifying men agree, while 10.4% of moderate-identifying men agree. In these circumstances, when analyzed by gender, the gap between people with liberal and moderate views closes slightly. 
 
 In contrast, people with moderate views and people with conservative views also hold somewhat similar beliefs (74.7% versus 67.8%). When broken down by gender, 35.1% of conservative-identifying women disagree with the women in politics question, while 43.9% of moderate-identifying women disagree. 32.7% of conservative-identifying men disagree, while 30.7% of moderate-identifying men disagree. Moreover, 16.6% of conservative-identifying women agree, while 14.9% of moderate-identifying women agree with the premise that men are emotionally better suited for politics. 15.6% of conservative-identifying men agree, while 10.4% of moderate-identifying men agree. When analyzed by gender, the gap between people with conservative and moderate views aligns a little more closely, especially the number of women who agree with the premise that men are emotionally better suited for politics. A larger number of conservative-identifying men agree then moderate-identifying men with the women in politics question. 
 
@@ -423,9 +423,9 @@ While there is often significant disagreement between liberals, conservatives, a
 #| message: false
 #| eval: true
 #| echo: false
-#| label: fig-moderate_liberal
+#| label: fig-moderate_comp
 #| fig-cap: Comparing Moderate and Liberal and Moderate and Conservative perceptions of women in politics
-#| layout-ncol: 2
+#| layout-ncol: 1
 
 # Code for having two columns referenced from: https://github.com/RohanAlexander/telling_stories/blob/main/05-static_communication.qmd 
 
@@ -473,15 +473,46 @@ finalized_data |>
 
 ```
 
+## Perceptions of Women in Politics by Party Identification 
+Despite assumptions and previous research, the data illustrates that perceptions of the emotional viability of women to serve in politics matches political party stances (Democrat and Republican) on the matter, but the results are not as negative and that public is more supportive of women running for elected office then anticipated (see @fig-other_comp). The support of women in politics falls along party lines and is more positive than the ratios of women elected to the House of Representatives and the Senate from each party. Currently, there are 92 Democrat women (21%) and 33 Republican women (8%) elected to the House of Representatives (which has 435 members in total) [@rutgers]. There are 15 Democrat women (15%), 9 Republican women (9%), and 1 Independent woman (1%) elected to the Senate (which has 100 members in total) [@rutgers]. 
+
+The results from @fig-modelresultsmarginal2, highlighting how `Others` are an estimated 8% more likely to disagree with the women in politics question than `Strong Democrats` leaves room for questions about the nature of respondents selecting this option. Referencing previous research, one can assume that those who selected `Other` may have political views further to the left of the Democrats on the political spectrum, but without an opportunity for respondents to provide a short written response or interview, this option will remain ambiguous and a further area of study [@dolanbook].  
+
 ```{r}
 #| message: false
+#| eval: true
 #| echo: false
-#| label: fig-moderate_con
-#| fig-cap: Comparing Moderate and Conservative Perceptions of Women in Politics
+#| label: fig-other_comp
+#| fig-cap: Comparing Other and Democrat and Other and Republican perceptions of women in politics
+#| layout-ncol: 2
 
-moderate_conservative_data |>
-   mutate(political_views = fct_relevel(political_views, "Extremely Conservative", "Conservative", "Slightly Conservative", "Moderate")) |>
-  ggplot(mapping = aes(x = year, fill = political_views)) +
+#Panel A
+finalized_data |>
+  select(year, id, gender, party_identification, women_in_politics) |>
+  filter(party_identification == "Strong Democrat" | party_identification == "Not Strong Democrat" | party_identification == "Independent, Close to Democrat" | party_identification == "Other") |>
+   mutate(party_identification = fct_relevel(party_identification, "Strong Democrat", "Not Strong Democrat", "Independent, Close to Democrat", "Other")) |>
+  ggplot(mapping = aes(x = year, fill = party_identification)) +
+  geom_bar() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=90, size = 5)) + 
+  labs(
+    x = "Year",
+    y = "Women in Politics",
+    fill = "Party Identification"
+  ) +
+  facet_wrap(vars(women_in_politics), scales = "free") +
+  guides(x = guide_axis(angle = 90)) +
+  theme(legend.text = element_text(size = 6)) +
+  theme(legend.title = element_text(size = 9)) +
+  theme(legend.position = "bottom") +
+  scale_fill_brewer(palette = "Set1")
+
+#Panel B
+finalized_data |>
+ select(year, id, gender, party_identification, women_in_politics) |>
+  filter(party_identification == "Strong Republican" | party_identification == "Not Strong Republican" | party_identification == "Independent, Close to Republican" | party_identification == "Other") |>
+   mutate(party_identification = fct_relevel(party_identification, "Strong Republican", "Not Strong Republican", "Independent, Close to Republican", "Other")) |>
+  ggplot(mapping = aes(x = year, fill = party_identification)) +
   geom_bar() +
   theme_minimal() +
   theme(axis.text.x = element_text(angle=90, size = 5)) + 
@@ -498,11 +529,6 @@ moderate_conservative_data |>
   scale_fill_brewer(palette = "Set1")
 
 ```
-
-## Perceptions of Women in Politics by Party Identification 
-Despite assumptions and previous research, the data illustrates that perceptions of the emotional viability of women to serve in politics matches political party stances (Democrat and Republican) on the matter, but the results are not as negative and that public is more supportive of women running for elected office then anticipated. The support of women in politics falls along party lines and is more positive than the ratios of women elected to the House of Representatives and the Senate from each party. Currently, there are 92 Democrat women (21%) and 33 Republican women (8%) elected to the House of Representatives (which has 435 members in total) [@rutgers]. There are 15 Democrat women (15%), 9 Republican women (9%), and 1 Independent woman (1%) elected to the Senate (which has 100 members in total) [@rutgers]. 
-
-The results from @fig-modelresultsmarginal2, highlighting how `Others` are an estimated 8% more likely to disagree with the women in politics question than `Strong Democrats` leaves room for questions about the nature of respondents selecting this option. Referencing previous research, one can assume that those who selected `Other` may have political views further to the left of the Democrats on the political spectrum, but without an opportunity for respondents to provide a short written response or interview, this option will remain ambiguous and a further area of study [@dolanbook].  
 
 ## Limitations
 Asking people about their political views and potential party affiliation remain sensitive topics, despite progress made since the 1970s. As a result, some people may not be comfortable answering these questions which limits the diversity of potential responses collected by GSS. Furthermore, previous research has shown that people may mask their true beliefs when asked about topics such as the viability of women to serve in elected office [@StereotypingQs], which could impact the quality of the data collected and number of "NA" and “don’t know” answers. Ambiguous survey question response options, such as **moderate** (from the political views question) and **other** (from the party identification question) should be clarified to avoid respondents from making an uninformed decision, thus impacting the quality of the data.
