@@ -132,16 +132,12 @@ Previous iterations of GSS selected respondents by quota (1972-1976), Kish grid 
 ### "No Answer" and "Don't Know" Responses
 When moving from an in-person interviewing process to web and mixed-method interviews, GSS shifted their approach to how to code uncertainty, indecision, or a refusal to answer from respondents. Prior to the Covid-19 pandemic, if a respondent opted not to answer a question, interviewers coded it as "No Answer" or "Don't Know". However, with the web-based survey in 2021, there was no interviewer to determine how to code a respondent's non-response. Instead of "No Answer" or "Don't Know", users could skip the question. "Skipped on web" indicates that users read a question but skipped it. "Skipped on web" responses are separated from “No Answer” which continues to be employed for the face-to-face and phone surveys [@gssCodebook].
 
-The women in politics survey question continues to have a high "No Answer" rate, with 82% of survey respondents opting not to respond. @fig-NA_responses illustrates years in which the women in politics survey question was not asked (solely shown as "NA" or omitted) and years in which it was asked, separated into the three possible answers of "Agree", "Disagree", and "NA". Previous research suggests that social desirability bias impacts respondents' willingness to reveal their true beliefs about social issues such as the role of women in politics [@StereotypingQs], which is an identified limitation of this survey and is likely affecting the number of responses collected (further discussed in [Limitations]). 
-
 ```{r}
 #| message: false
 #| echo: false
 #| warning: false
 #| label: fig-NA_responses
 #| fig-cap: Distribution of "No Answer" responses to the Women in Politics Question by year
-
-# Note to self: add this kind of breakdown for the other two Qs on pol view and party id.
 
 # Code to manually change colours referenced from: https://stackoverflow.com/questions/36048033/manually-colouring-plots-with-scale-fill-manual-in-ggplot2-not-working
 
@@ -159,6 +155,49 @@ finalized_data1 |>
   scale_fill_manual(values = c("red2", "dodgerblue3", "grey"))
 
 ```
+
+The women in politics survey question continues to have a high "No Answer" rate, with 82% of survey respondents opting not to respond. @fig-NA_responses illustrates years in which the women in politics survey question was not asked (solely shown as "NA" or omitted) and years in which it was asked, separated into the three possible answers of "Agree", "Disagree", and "NA". Previous research suggests that social desirability bias impacts respondents' willingness to reveal their true beliefs about social issues such as the role of women in politics [@StereotypingQs; @claassen], which is an identified limitation of this survey and is likely affecting the number of responses collected (further discussed in [Limitations]). 
+
+```{r}
+#| message: false
+#| eval: true
+#| echo: false
+#| label: fig-NA_responses1
+#| fig-cap: Distribution of "No Answer" responses to the Political Views and Party Identification questions by year
+#| fig-subcap: ["Political Views", "Party Identification", "Including standard errors"]
+#| layout-ncol: 1
+
+# Code for sub-cap referenced from: https://github.com/RohanAlexander/telling_stories/blob/main/05-static_communication.qmd
+# Panel (a)
+finalized_data1 |>
+  mutate(political_views = fct_relevel(political_views, "Extremely Liberal", "Liberal", "Slightly Liberal", "Moderate",
+          "Slightly Conservative", "Conservative", "Extremely Conservative")) |>
+  ggplot(mapping = aes(x = year, fill = political_views)) +
+  geom_bar() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=90, size = 8)) +
+  labs(x = "Year", y = "Number of Respondents", fill = "Political Views") +
+  theme(legend.position = "bottom") +
+  theme(legend.text = element_text(size = 6)) +
+  theme(legend.title = element_text(size = 8)) +
+  scale_fill_manual(values = c("red2", "dodgerblue3", "purple2", "green3", "turquoise2", "yellow2", "orange2", "grey"))
+
+# Panel (b)
+finalized_data1 |>
+   mutate(party_identification = fct_relevel(party_identification, "Strong Democrat", "Not Strong Democrat", "Independent, Close to Democrat", "Other", "Independent, Close to Republican", "Not Strong Republican", "Strong Republican")) |>
+ ggplot(mapping = aes(x = year, fill = party_identification)) +
+  geom_bar() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=90, size = 8)) +
+  labs(x = "Year", y = "Number of Respondents", fill = "Party Identification") +
+  theme(legend.position = "bottom") +
+  theme(legend.text = element_text(size = 6)) +
+  theme(legend.title = element_text(size = 8)) +
+  scale_fill_manual(values = c("red2", "dodgerblue3", "purple2", "green3", "yellow2", "turquoise2", "orange2", "deeppink2", "grey"))
+
+```
+
+In comparison to the women in politics survey question, the political views and party identification questions have far fewer respondents select "No Answer", as highlighted by @fig-NA_responses1. @fig-NA_responses1 visualizes the distribution of responses over time, with the years in which the political views and party identification questions were not asked shown solely as "NA" or omitted. The political views question was answered by 99% of respondents, while the party identification question was answered by 87% of respondents. These percentages emphasize that while respondents are generally comfortable sharing information regarding their political views and political party affiliation, there is a high level of discomfort when talking about the role of women in politics.  
 
 ## Data Cleaning and Preperations 
 Data was collected, cleaned, and analyzed using the statistical programming software R [@r], using functions from `tidyverse` [@rTidyverse], `ggplot2` [@rGgplot2], `dplyr` [@rDplyr], `janitor` [@rJanitor], `KableExtra` [@rKableExtra], `knitr` [@rknitr], `labelled` [@rLabelled], `haven` [@rHaven], `Formattable` [@rFormattable], and `here` [@rHere]. 
@@ -277,7 +316,7 @@ Finally, 486 people (81.8%) who self-identify as being affiliated with a third p
 # Results
 This paper aims to evaluate the role of demographic factors, including gender, political views, and party identification on perceptions of whether women are emotionally suited for political office. I am especially interested in seeing whether the combination of the respondent's gender and political views and the respondent's gender and party identification impacts their overall perceptions of women in politics. 
 
-Statistical modeling was executed in the statistical programming language R [@r], using `rstanarm` [@rstanarm], `gtsummary` [@gtsummary], `marginaleffects` [@marginal], and `modelsummary` [@modelsummary]. The model was fit in a Bayesian framework using `rstanarm` [@rstanarm]. I used the standard weakly informed prior distributions of 2.5 provided in the `rstanarm` package.
+Statistical modeling was executed in the statistical programming language R [@r], using `rstanarm` [@rstanarm], `gtsummary` [@gtsummary], `marginaleffects` [@marginal], and `modelsummary` [@modelsummary]. Both models were fit in a Bayesian framework using `rstanarm` [@rstanarm]. I used the standard weakly informed prior distributions of 2.5 provided in the `rstanarm` package.
 
 ## Political Views
 The first model considers whether a respondent agreed or disagreed with the premise that men are emotionally better suited for politics than women, as a function of their gender and political views.  
@@ -509,9 +548,9 @@ Asking people about their political views and potential party affiliation remain
 
 Starting from the assumption that respondents are likely to have political party views and party identifications that closely align with either of the two dominant political parties makes it challenging to collect accurate data about those who do not subscribe to either the Republican or Democrat playbooks [@davisbook]. Specifically, ambiguous survey question response options, such as **Moderate** (from the political views question) and **Other** (from the party identification question) should be expanded and clarified to ensure that the increasing number of people who find themselves aligning somewhere in the middle are not overlooked in the survey results [@fowler]. Understanding Moderate political views and Other party identifications is more nuanced than simply selecting "agree" or "disagree" on a survey, so without an opportunity for people to explain their views through an open-ended text box, important information which helps contextualize why respondents do or do not believe women are emotionally viable to serve in elected office is missed. 
 
-Likewise, previous research has shown that people may have social desirability bias and mask their true beliefs when asked about topics such as the viability of women to serve in elected office [@StereotypingQs; @femquant]. Social desirability bias could be impacting the quality of the data collected, resulting in a significant number of "No Answer" responses, especially from respondents who complete the survey through the face-to-face and telephone modes. 
+Likewise, previous research has shown that people may have social desirability bias and mask their true beliefs when asked about topics such as the viability of women to serve in elected office, to avoid perceived social judgement and present the best version of themselves [@StereotypingQs; @femquant; @claassen]. Social desirability bias could be impacting the quality of the data collected, resulting in a significant number of "No Answer" responses, especially from respondents who complete the survey through the face-to-face and telephone modes. 
 
-Despite the changing variable names to account for newer survey methods, the question asking whether men are emotionally better suited for politics than women hearkens back to the 1970s, regardless of the strides being made toward gender equality in politics. The phrasing of the question asking whether men are better emotionally suited is a leading question which is biased and primes the respondent to think about women in a specific way, reinforcing gender stereotypes [@femquant]. The media often frames women as being emotional, high strung, and not possessing “manly” leadership skills, whereas men are never asked about their emotions or have their behavior in the public eye covered through the lens of being emotional [@fallfromgrace; @bashevkin]. The same should be expected for the media coverage of women in politics and by extension, how the public is surveyed surrounding topics of women’s political  leadership and representation. GSS should consider asking respondents in future iterations of the survey about leadership qualities, relevant experience, and ability to address crucial policy issues. New phrasings of the women in politics survey question must account for the current progress being made toward gender equality, today's hybrid media environment, and the role that social media plays in disseminating political rhetoric and shaping the image of political candidates [@vanderpas2020]. 
+Despite the changing variable names to account for newer survey methods, the question asking whether men are emotionally better suited for politics than women hearkens back to the 1970s, regardless of the strides being made toward gender equality in politics. The phrasing of the question asking whether men are better emotionally suited is a leading question which is biased and primes the respondent to think about women in a specific way, reinforcing gender stereotypes [@femquant]. The media often frames women as being emotional, high strung, and not possessing “manly” leadership skills, whereas men are never asked about their emotions or have their behavior in the public eye covered through the lens of being emotional [@fallfromgrace; @bashevkin]. The same should be expected for the media coverage of women in politics and by extension, how the public is surveyed surrounding topics of women’s political leadership and representation. GSS should consider asking respondents in future iterations of the survey about leadership qualities, relevant experience, and ability to address crucial policy issues. New phrasings of the women in politics survey question must account for the current progress being made toward gender equality, today's hybrid media environment, and the role that social media plays in disseminating political rhetoric and shaping the image of political candidates [@vanderpas2020]. 
 
 Finally, GSS' changing sampling methodology over time may have lead to the imbalance of respondents by **gender**. This imbalance means that people who self-identify as female are represented at a slightly higher rate than people who self-identify as male, meaning readers should be aware when drawing conclusions about gendered perceptions of women in politics. Furthermore, other changes in methodology due to the Covid-19 pandemic may have impacted more recent responses, especially since access to reliable internet, cell phone service, and technological literacy are not a given among all respondents.
 
