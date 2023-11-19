@@ -503,8 +503,9 @@ finalized_data |>
   ) +
   facet_wrap(vars(women_in_politics), scales = "free") +
   guides(x = guide_axis(angle = 90)) +
-  theme(legend.text = element_text(size = 6)) +
-  theme(legend.title = element_text(size = 9)) +
+  theme(legend.key.width=unit(0.3, "cm")) +
+  theme(legend.title = element_text(size = 7)) +
+  theme(legend.text = element_text(size = 5)) +
   theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Set1")
 
@@ -524,8 +525,9 @@ finalized_data |>
   ) +
   facet_wrap(vars(women_in_politics), scales = "free") +
   guides(x = guide_axis(angle = 90)) +
-  theme(legend.text = element_text(size = 6)) +
-  theme(legend.title = element_text(size = 9)) +
+  theme(legend.key.width=unit(0.3, "cm")) +
+  theme(legend.title = element_text(size = 7)) +
+  theme(legend.text = element_text(size = 5)) +
   theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Set1")
 ```
@@ -564,8 +566,9 @@ finalized_data |>
   ) +
   facet_wrap(vars(women_in_politics), scales = "free") +
   guides(x = guide_axis(angle = 90)) +
-  theme(legend.text = element_text(size = 6)) +
-  theme(legend.title = element_text(size = 9)) +
+  theme(legend.key.width=unit(0.3, "cm")) +
+  theme(legend.title = element_text(size = 7)) +
+  theme(legend.text = element_text(size = 5)) +
   theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Set1")
 
@@ -585,8 +588,9 @@ finalized_data |>
   ) +
   facet_wrap(vars(women_in_politics), scales = "free") +
   guides(x = guide_axis(angle = 90)) +
-  theme(legend.text = element_text(size = 6)) +
-  theme(legend.title = element_text(size = 9)) +
+  theme(legend.key.width=unit(0.3, "cm")) +
+  theme(legend.title = element_text(size = 7)) +
+  theme(legend.text = element_text(size = 5)) +
   theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Set1")
 
